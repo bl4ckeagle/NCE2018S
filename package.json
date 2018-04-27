@@ -1,0 +1,28 @@
+{
+  "name": "telegramexamplebot",
+  "version": "1.0.0",
+  "description": "A Telegram bot for the healthyliving bot api",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://funatika@bitbucket.org/cosyhealthylivingbot/telegramexamplebot.git"
+  },
+  "keywords": [
+    "Telegram",
+    "bot",
+    "HealthyLiving"
+  ],
+  "author": "Oliver Guggenberger",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.85.0",
+    "telebot": "^1.2.6"
+  },
+  "bugs": {
+    "url": "https://bitbucket.org/cosyhealthylivingbot/telegramexamplebot/issues"
+  },
+  "homepage": "http://healthylivingbot.cosy.univie.ac.at:8000/"
+}

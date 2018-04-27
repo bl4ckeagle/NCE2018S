@@ -1,0 +1,513 @@
+{
+	"info": {
+		"_postman_id": "13f16dbd-6e3f-4697-b722-5ae3d7fd494e",
+		"name": "HealthyLivingAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Req Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"credentials\":{\n\t\t\"user\": \"admin\",\n\t\t\"password\": \"gymbro_pw\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/token",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"token"
+					]
+				},
+				"description": "Request an acces token with user credentials"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User List",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.OTF_oJRoInPZcBF9Ep2uut73Qd0HY4z0l6ssxyNwXs0"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/user/",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"name\": \"Karl Muster\",\n    \"user name\": \"gugix\",\n    \"tele number\": \"0676 12 34567\",\n    \"level\": \"beginner\", \n    \"goals\" : [\n    \t{\n\t        \"main\": \"\",\n\t        \"seassion_frequency\": \"1\",\n\t        \"seassion_time\": 1, \n\t\n\t        \"mode\": \"low_carb\", \n\t\n\t        \"daily_calories\": 1700, \n\t\n\t        \"nutrition_goals\": {\n\t            \"carbohydrate\": 33, \n\t            \"proteins\": 33,\n\t            \"fat\": 33\n    \t\t}\n    \t}\n    ],\n    \"reminders\":  [\n        {\n             \"type\":\"food\", \n             \"frequency:\": 3\n        },\n        {\n             \"type\": \"exercise\",\n             \"frequency\": 2\n        },\n        {\n             \"type\": \"log\",\n             \"frequency\": 2\n        }\n    ],\n\n    \"plans\" :[\n        {\n            \"name\": \"summer body\",\n            \"body_parts\": [\n                \"upper_body\",\n                \"arms\"\n            ]\n        },\n        {\n\n        }\n    ],\n\n    \"logs\": [\n        {\n            \"type\": \"food\", \n            \"description\": \"\",\n            \"created\": \"datetime.datetime.now()\"\n\n        }\n    ]\n\n}"
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/user/",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						""
+					]
+				},
+				"description": "localhost:5000/add/user/"
+			},
+			"response": []
+		},
+		{
+			"name": "Add goal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"facebook_id\" : { \"$numberLong\" : \"1234567891234567\" }, \n\t\"telegram_id\" : -1, \n\t\"id\" : 11, \n\t\"name\" : \"Panittha Suwannajang\", \n\t\"dataStreamId\" : {} ,\n\t\"logs\" : [], \n\t\"reminders\" : [],\n\t\"goals\" : [ \n\t\t{ \"session_frequency\" : \"3\", \n\t\t\"total_calories\" : 2286, \n\t\t\"msg2self\" : \"I want to get fit look better and feel better I have been doing some pretty bad habits for a while now\", \n\t\t\"diet\" : \"Vegetarian\", \n\t\t\"main\" : \"lose weight\", \n\t\t\"aim_calories\" : 1538 \n\t\t} \n\t]\n\n}"
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/goal/0",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"goal",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add user goal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"main\": \"Eat healtier\",\n\t\"seassion_frequency\": \"4\",\n\t\"seassion_time\": 120\n}\t"
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/goal/0",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"goal",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiYWRtaW4ifQ.aSZoF2ZH82wSPrYZhKlzWEDEkODK1csR7MGdPPbBiOA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/user/0",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/user/0",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add User Goal",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"main\": \"Eat healtier2\",\n\t\"seassion_frequency\": \"4\",\n\t\"seassion_time\": 120\n}\t"
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/goal/0",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"goal",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Goal",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/user/0/goal/0",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"0",
+						"goal",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Goals",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/goal/user/0/",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"goal",
+						"user",
+						"0",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Calendar List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/calendar/user/0",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"calendar",
+						"user",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new calendar",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"summary\" : \"test\",\n\t\"timeZone\": \"Europe/Vienna\"\n}"
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/calendar/user/0/test/",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"calendar",
+						"user",
+						"0",
+						"test",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add event to calendar",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"summary\": \"GymBro: test\",\n  \"start\": {\n    \"date\": \"2018-03-28\"\n  },\n  \"end\": {\n    \"date\": \"2018-03-28\"\n  },\n  \"description\": \"description\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/calendar/user/0/primary/event/",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"calendar",
+						"user",
+						"0",
+						"primary",
+						"event",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add event to calendar Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"summary\": \"GymBro: test\",\n  \"start\": {\n    \"date\": \"2018-03-28\"\n  },\n  \"end\": {\n    \"date\": \"2018-03-28\"\n  },\n  \"description\": \"description\"\n}"
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/calendar/user/0/primary/event/",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"calendar",
+						"user",
+						"0",
+						"primary",
+						"event",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add event to calendar Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"summary\": \"GymBro: test\",\n  \"start\": {\n    \"date\": \"2018-03-28\"\n  },\n  \"end\": {\n    \"date\": \"2018-03-28\"\n  },\n  \"description\": \"description\"\n}"
+				},
+				"url": {
+					"raw": "http://healthylivingbot.cosy.univie.ac.at:5000/calendar/user/0/primary/event/",
+					"protocol": "http",
+					"host": [
+						"healthylivingbot",
+						"cosy",
+						"univie",
+						"ac",
+						"at"
+					],
+					"port": "5000",
+					"path": [
+						"calendar",
+						"user",
+						"0",
+						"primary",
+						"event",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
