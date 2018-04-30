@@ -1,5 +1,5 @@
 
-const TELEGRAM_BOT_TOKEN = "596837467:AAGQ2sAgb5NqKQvV82mhlb0j8mGa3BTwUoQ";
+const TELEGRAM_BOT_TOKEN = "please generate a new key with the botfather";
 const TeleBot = require('telebot');
 const request = require("request");
 
