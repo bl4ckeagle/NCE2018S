@@ -1,8 +1,8 @@
-
-const TELEGRAM_BOT_TOKEN = "please generate a new key with the botfather";
 const TeleBot = require('telebot');
 const request = require("request");
-
+const helper = require("./helper/helper");
+const key =helper.getmykey();
+const TELEGRAM_BOT_TOKEN = key;
 const bot = new TeleBot(TELEGRAM_BOT_TOKEN);
 const baseUrl = "http://healthylivingbot.cosy.univie.ac.at:5000";
 
