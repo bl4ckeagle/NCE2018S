@@ -1,9 +1,12 @@
+
 class User {
 
 
-    constructor() {
+    constructor(name,sex) {
 
-
+        //Name and Sex
+        this.name=name;
+        this.sex=sex;
         //level
         this.ArmsLvl = 0;
         this.legsLvl = 0;
@@ -12,7 +15,7 @@ class User {
         this.backLvl = 0;
         this.shouldersLvl = 0;
         this.calvesLvl = 0;
-        //epx
+        //exp
         this.ArmsExp = 0;
         this.legsExp = 0;
         this.absExp = 0;
@@ -21,5 +24,7 @@ class User {
         this.shouldersExp = 0;
         this.calvesExp = 0;
     }
+
+
 }
 module.exports = User;
