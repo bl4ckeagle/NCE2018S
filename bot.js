@@ -20,6 +20,9 @@ bot.on('/hello', (msg) => {
     return bot.sendMessage(msg.from.id, `Hello, ${ msg.from.first_name }!`);
 });
 
+bot.on('/easterEgg',
+    (gif)=>
+    gif.video(gif.from.id,"./media/easter/oZXvR.gif"));
 
 //get exercise categories
 bot.on('/cat', (msg) => {
@@ -54,7 +57,7 @@ bot.on(/^\/ex (.+)$/, (msg, props) => {
 
         if (!error && response.statusCode === 200) {
             //return pretty json
-            //show first exercise of this category            
+            //show first exercise of this category
             bot.sendMessage(msg.from.id, JSON.stringify(body.results[0], null, 2) );
         }
     });
@@ -120,6 +123,8 @@ function getAccesToken(){
         });   
       }).catch(console.log);
 }
+
+
 
 
 bot.start();

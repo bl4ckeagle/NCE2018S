@@ -20,8 +20,8 @@ NodeJs Telegram Bot library which utilize the Telegram REST API.
 
 ## Development hint
 
-Use the **Forever module** for convienient development.
-This module will watch your files an restart node as needed.
+Use the **Forever model** for convienient development.
+This model will watch your files an restart node as needed.
 
 ### Install with:
 
