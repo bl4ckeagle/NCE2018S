@@ -1,11 +1,11 @@
 const request = require("request");
 
 class NCEDefaultBot {
-    constructor(bot, accessToken,baseUrl) {
+    constructor(bot, accessToken, baseUrl) {
 
         this.bot = bot;
         this.accessToken = accessToken;
-        this.baseUrl=baseUrl;
+        this.baseUrl = baseUrl;
         this.defaultBot();
     }
 
@@ -14,11 +14,14 @@ class NCEDefaultBot {
         this.bot.on(['/start', '/hello'], (msg) => msg.reply.text('Welcome to the Healthyliving Bot! :)'));
 
         this.bot.on('/hello', (msg) => {
-            bot.sendMessage(msg.from.id, `Hello, ${ msg.from.first_name }!`);
+            this.bot.sendMessage(msg.from.id, `Hello, ${ msg.from.first_name }!`);
         });
 
         this.bot.on('/easterEgg',
-            (gif) =>gif.video(gif.from.id, "../media/easter/oZXvR.gif"));
+            (gif) => {
+                this.bot.sendVideo(gif.from.id, "./media/easter/oZXvR.gif");
+                console.log(gif.from.id);
+            });
 
 //get exercise categories
         this.bot.on('/cat', (msg) => {
