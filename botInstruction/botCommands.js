@@ -1,8 +1,8 @@
 
 class BotCommands {
-    constructor(bot) {
+    constructor(bot,db) {
         this.bot = bot;
-        this.userid = 0;
+        this.db=db;
         this.defaultBot();
     }
 
@@ -11,8 +11,11 @@ class BotCommands {
 
         this.bot.on("/userId",
             (msg) => {
-                console.log(msg.from.id); // get userID
-                this.bot.sendMessage(msg.from.id, `Hello, ${ msg.from.id }!`);
+                let userId=msg.from.id;
+                console.log(userId); // get userID
+                this.bot.sendMessage(msg.from.id,userId);
+
+
             }
         );
     }

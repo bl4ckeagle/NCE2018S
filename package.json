@@ -18,6 +18,7 @@
   "author": "Oliver Guggenberger",
   "license": "ISC",
   "dependencies": {
+    "lokijs": "^1.5.3",
     "request": "^2.85.0",
     "telebot": "^1.2.6"
   },
