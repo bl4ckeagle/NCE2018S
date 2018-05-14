@@ -4,7 +4,7 @@ const request = require("request");
 fs = require('fs');
 
 class Helper {
-    constructor(baseUrl) {
+    constructor() {
     }
 
     static getTelegramKey() {
@@ -45,6 +45,12 @@ class Helper {
                 }
             )
         };
+
+    static createCollection(collectionName,db)
+    {
+        let dbCollection = db.addCollection(collectionName);
+        return dbCollection;
+    }
 }
 
 module.exports = Helper;

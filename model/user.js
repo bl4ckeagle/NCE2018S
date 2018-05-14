@@ -1,28 +1,45 @@
-
 class User {
 
 
-    constructor(id,name) {
+    constructor(id, name, collection) {
 
-        //Name and Sex
-        //level
-        this._ArmsLvl = 0;
-        this._legsLvl = 0;
-        this._absLvl = 0;
-        this._chestLvl = 0;
-        this._backLvl = 0;
-        this._shouldersLvl = 0;
-        this._calvesLvl = 0;
-        //exp
-        this._ArmsExp = 0;
-        this._legsExp = 0;
-        this._absExp = 0;
-        this._chestExp = 0;
-        this._backExp = 0;
-        this._shouldersExp = 0;
-        this._calvesExp = 0;
-        this._id = id;
-        this._name = name;
+        if (collection.findOne({'id': id}) !== null) {
+            console.log("not null");
+
+            if (collection.findOne({id: id}).id == id) {
+                console.log(collection.findOne({id: id}).id);
+                console.log("what?");
+            }
+        } else {
+            //id username
+            this._id = id;
+            this._name = name;
+            //level
+            this._ArmsLvl = 0;
+            this._legsLvl = 0;
+            this._absLvl = 0;
+            this._chestLvl = 0;
+            this._backLvl = 0;
+            this._shouldersLvl = 0;
+            this._calvesLvl = 0;
+            //exp
+            this._ArmsExp = 0;
+            this._legsExp = 0;
+            this._absExp = 0;
+            this._chestExp = 0;
+            this._backExp = 0;
+            this._shouldersExp = 0;
+            this._calvesExp = 0;
+
+            //save to database
+            collection.insert({
+                id: this._id,
+                name: this._name
+            });
+
+            console.log("false");
+            console.log(id);
+        }
     }
 
     //getter
@@ -148,4 +165,5 @@ class User {
         this._calvesExp = value;
     }
 }
+
 module.exports = User;
