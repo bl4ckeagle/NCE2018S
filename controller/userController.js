@@ -8,6 +8,7 @@ class UserController {
         this.nceToken = nceToken;
     }
 
+    //gets users from the nce api, uses callback and returns the then function for botCommands promise.all
     getUser() {
         let p1 = new Promise(resolve => {
             let options =

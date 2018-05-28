@@ -8,6 +8,7 @@ class Helper {
     constructor() {
     }
 
+    //get the telegramID from a textfile
     static getTelegramKey() {
         let key = "";
         try {
@@ -20,6 +21,7 @@ class Helper {
         return key;
     };
 
+    //gets access token from nce app, with callback for the bot.js promise all
     static getAccessToken(baseUrl) {
         let promise = new Promise(resolve => {
                 request.post({

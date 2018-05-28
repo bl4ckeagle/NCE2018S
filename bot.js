@@ -7,6 +7,7 @@ const key = helper.getTelegramKey();
 const TELEGRAM_BOT_TOKEN = key;
 const bot = new TeleBot(TELEGRAM_BOT_TOKEN);
 
+//initlise bot with api token and nce token
 Promise.all([
     helper.getAccessToken(baseUrl)]
 ).then(([nceToken]) => {

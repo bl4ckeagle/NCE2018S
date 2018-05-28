@@ -12,7 +12,7 @@ class BotCommands {
         this.training = null;
         this.calender = null;
         this.defaultBot();
-
+        //get all collections from the api
         Promise.all([
             new userController(this.baseUrl, this.nceToken).getUser(),
 
@@ -29,10 +29,11 @@ class BotCommands {
             (msg) => {
                 let userId = msg.from.id;
                 let userName = msg.from.first_name;
+
                 console.log(userName); // get Names
                 console.log(userId); // get userID
                 let user = new userModel(userId,userName,this.userCollection);
-                console.log(user);
+                console.log(user.absExp);
             })
     };
 }
