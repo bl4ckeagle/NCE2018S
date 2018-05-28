@@ -6,6 +6,7 @@ class NCEDefaultBot {
         this.bot = bot;
         this.accessToken = accessToken;
         this.baseUrl = baseUrl;
+        this.userCollection= null;
         this.defaultBot();
     }
 

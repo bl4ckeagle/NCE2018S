@@ -1,4 +1,5 @@
 const request = require("request");
+const lokijs = require("lokijs");
 
 
 fs = require('fs');
@@ -20,36 +21,38 @@ class Helper {
     };
 
     static getAccessToken(baseUrl) {
-            let promise1 = new Promise(
-                function (resolve, reject) {
-                    request.post({
-                        url: baseUrl + "/token",
-                        body: {
-                            "credentials": {
-                                "user": "admin",
-                                "password": "gymbro_pw"
-                            }
-                        },
-                        json: true, //// Automatically parses the JSON string in the response
-
-                    }, (error, response, body) => {
-                        if (error)
-                            reject(error);
-                        if (!error && response.statusCode === 200) {
-                            resolve(body)
+        let promise = new Promise(resolve => {
+                request.post({
+                    url: baseUrl + "/token",
+                    body: {
+                        "credentials": {
+                            "user": "admin",
+                            "password": "gymbro_pw"
                         }
-                    })
-                });
-            promise1.then(body =>{
-                console.log(body.token)
-                }
-            )
-        };
+                    },
+                    json: true, //// Automatically parses the JSON string in the response
 
-    static createCollection(collectionName,db)
-    {
-        let dbCollection = db.addCollection(collectionName);
-        return dbCollection;
+                }, (error, response, body) => {
+                    if (error)
+                        console.log('error');
+                    if (!error && response.statusCode === 200) {
+                        resolve({token: body.token});
+                    }
+                })
+            }
+
+            );
+        return promise.then((resolve)=>
+            {
+                return  resolve.token;
+            }
+        )
+    };
+
+
+    static createCollection(collectionName,data) {
+        let db = new lokijs();
+        return db.addCollection(collectionName).insert(data);
     }
 }
 

@@ -1,13 +1,13 @@
 class User {
 
 
-    constructor(id, name, collection) {
+    constructor(id, name, userCollection) {
 
-        if (collection.findOne({'id': id}) !== null) {
+        if (userCollection.findOne({telegram_id: id}) !== null) {
             console.log("not null");
 
-            if (collection.findOne({id: id}).id == id) {
-                console.log(collection.findOne({id: id}).id);
+            if (userCollection.findOne({telegram_id: id}).id == id) {
+                console.log(userCollection.findOne({id: id}).id);
                 console.log("what?");
             }
         } else {
@@ -32,7 +32,7 @@ class User {
             this._calvesExp = 0;
 
             //save to database
-            collection.insert({
+            userCollection.insert({
                 id: this._id,
                 name: this._name
             });

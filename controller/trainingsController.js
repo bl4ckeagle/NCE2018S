@@ -1,11 +1,10 @@
 const request = require("request");
-
 class TrainingsController {
+
     constructor(baseUrl, userId, accessToken) {
         this.baseUrl =baseUrl;
         this.userId =userId;
         this.accessToken =accessToken;
-
     }
 
     requestTraining()
