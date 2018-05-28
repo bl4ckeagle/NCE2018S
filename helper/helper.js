@@ -1,5 +1,5 @@
 const request = require("request");
-const lokijs = require("lokijs");
+const loki = require("lokijs");
 
 
 fs = require('fs');
@@ -51,8 +51,10 @@ class Helper {
 
 
     static createCollection(collectionName,data) {
-        let db = new lokijs();
-        return db.addCollection(collectionName).insert(data);
+        let db = new loki;
+        let collection = db.addCollection(collectionName);
+        collection.insert(data);
+        return collection;
     }
 }
 

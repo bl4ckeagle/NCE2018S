@@ -1,4 +1,4 @@
-const user = require("../model/User");
+const userModel = require("../model/User");
 const helper = require("../helper/helper");
 const userController = require("../controller/userController");
 
@@ -31,6 +31,8 @@ class BotCommands {
                 let userName = msg.from.first_name;
                 console.log(userName); // get Names
                 console.log(userId); // get userID
+                let user = new userModel(userId,userName,this.userCollection);
+                console.log(user);
             })
     };
 }

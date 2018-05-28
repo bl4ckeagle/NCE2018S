@@ -3,14 +3,14 @@ class User {
 
     constructor(id, name, userCollection) {
 
-        if (userCollection.findOne({telegram_id: id}) !== null) {
+        if (userCollection.findOne({nce2018G2: id}) !== null) {
             console.log("not null");
 
-            if (userCollection.findOne({telegram_id: id}).id == id) {
-                console.log(userCollection.findOne({id: id}).id);
+            if (userCollection.findOne({nce2018G2: id}).id == id) {
                 console.log("what?");
             }
         } else {
+            console.log("new user");
             //id username
             this._id = id;
             this._name = name;
@@ -33,12 +33,9 @@ class User {
 
             //save to database
             userCollection.insert({
-                id: this._id,
+                nce2018G2: this._id,
                 name: this._name
             });
-
-            console.log("false");
-            console.log(id);
         }
     }
 
