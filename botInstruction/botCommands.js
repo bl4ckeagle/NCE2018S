@@ -15,7 +15,6 @@ class BotCommands {
         //get all collections from the api
         Promise.all([
             new userController(this.baseUrl, this.nceToken).getUser(),
-
         ]).then(([getUser]) => {
                 this.userCollection = helper.createCollection('user', getUser);
             }
@@ -24,6 +23,7 @@ class BotCommands {
             }
         )
     }
+
     defaultBot() {
         this.bot.on("/startTraining",
             (msg) => {
@@ -32,9 +32,15 @@ class BotCommands {
 
                 console.log(userName); // get Names
                 console.log(userId); // get userID
-                let user = new userModel(userId,userName,this.userCollection);
+                let user = new userModel(userId, userName, this.userCollection);
                 console.log(user.absExp);
-            })
+                msg.reply.text(user.name);
+            });
+        this.bot.on('/easterEgg',
+            (gif) => {
+                this.bot.sendVideo(gif.from.id, "./media/easter/oZXvR.gif");
+                console.log(gif.from.id);
+            });
     };
 }
 

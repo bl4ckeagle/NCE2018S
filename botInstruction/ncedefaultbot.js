@@ -18,11 +18,7 @@ class NCEDefaultBot {
             this.bot.sendMessage(msg.from.id, `Hello, ${ msg.from.first_name }!`);
         });
 
-        this.bot.on('/easterEgg',
-            (gif) => {
-                this.bot.sendVideo(gif.from.id, "./media/easter/oZXvR.gif");
-                console.log(gif.from.id);
-            });
+
 
 //get exercise categories
         this.bot.on('/cat', (msg) => {
