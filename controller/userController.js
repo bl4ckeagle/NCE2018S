@@ -19,7 +19,7 @@ class UserController {
                         token: this.nceToken
                     }
                 };
-            request(options, (error, response, body) => {
+            request.get(options, (error, response, body) => {
                     if (error)
                         console.log("get user Throws an error, check");
 
