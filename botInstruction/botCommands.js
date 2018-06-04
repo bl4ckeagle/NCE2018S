@@ -41,9 +41,18 @@ class BotCommands {
                 console.log(userId); // get userID
                 let user = new userModel(userId, userName, this.userCollection);
                 let trainings = new trainingsModel(this.exercisesCollection);
-                console.log(user.absExp);
-                msg.reply.text(user.name);
+                msg.reply.text("Hi,"+user.name + "!");
+                msg.reply.text("Type /randomExercise to get an exercise.")
             });
+
+        this.bot.on("/randomExercise",
+            (msg)=> {
+              let trainings = new trainingsModel(this.exercisesCollection);
+              let exercise = trainings.getRandomExercise()
+              msg.reply.text(exercise.name)
+              msg.reply.text(exercise.description)
+            })
+
         this.bot.on('/easterEgg',
             (gif) => {
                 this.bot.sendVideo(gif.from.id, "./media/easter/oZXvR.gif");

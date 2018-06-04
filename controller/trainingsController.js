@@ -56,7 +56,7 @@ class TrainingsController {
           });
 
           let ex = await getExercises;
-          categories[i].exercises = ex.body.results;
+          categories[i].exercise = ex.body.results;
         }
         return categories
       })
