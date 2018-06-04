@@ -1,10 +1,17 @@
+//TODO create model as in user
+class Training{
+//  exercise = []
 
-class Trainig{
 
 
+  constructor(exercisesCollection){
+    console.log(exercisesCollection.data[0])
+  }
 
 
 
 
 }
-module.exports =Trainig;
+
+
+module.exports = Training;
