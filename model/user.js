@@ -33,7 +33,6 @@ class User {
             this._backExp = 0;
             this._shouldersExp = 0;
             this._calvesExp = 0;
-
         }
 
     }
