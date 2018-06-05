@@ -5,37 +5,36 @@ class User {
 
         //check if user exists if not create a new one with name and id from telegram
 
-        if (userCollection.findOne({nce2018G2: id}) !== null) {
-            console.log("not null");
-
-
-            if (userCollection.findOne({nce2018G2: id}).id == id) {
-                console.log("what?");
+        if (userCollection.find({'NCE2018G1.id':id}) !== null) {
+           console.log("test");
+            console.log(userCollection.find({'NCE2018G1.id':id}));
+           if (0 === 0) {
+                console.log("what");
             }
         }
-            else {
-                console.log("new user");
-                //id username
-                this._id = id;
-                this._name = name;
-                //level
-                this._ArmsLvl = 0;
-                this._legsLvl = 0;
-                this._absLvl = 0;
-                this._chestLvl = 0;
-                this._backLvl = 0;
-                this._shouldersLvl = 0;
-                this._calvesLvl = 0;
-                //exp
-                this._ArmsExp = 0;
-                this._legsExp = 0;
-                this._absExp = 0;
-                this._chestExp = 0;
-                this._backExp = 0;
-                this._shouldersExp = 0;
-                this._calvesExp = 0;
+        else {
+            console.log("new user");
+            //id username
+            this._id = id;
+            this._name = name;
+            //level
+            this._ArmsLvl = 0;
+            this._legsLvl = 0;
+            this._absLvl = 0;
+            this._chestLvl = 0;
+            this._backLvl = 0;
+            this._shouldersLvl = 0;
+            this._calvesLvl = 0;
+            //exp
+            this._ArmsExp = 0;
+            this._legsExp = 0;
+            this._absExp = 0;
+            this._chestExp = 0;
+            this._backExp = 0;
+            this._shouldersExp = 0;
+            this._calvesExp = 0;
 
-            }
+        }
 
     }
 
