@@ -33,9 +33,38 @@ class BotCommands {
                 console.log(userName); // get Names
                 console.log(userId); // get userID
                 let user = new userModel(userId, userName, this.userCollection);
-                console.log(user.absExp);
+                console.log(user.name);
                 msg.reply.text(user.name);
             });
+
+        this.bot.on("/randomExercise",
+            (msg)=> {
+              let trainings = new trainingsModel(this.exercisesCollection);
+              let exercise = trainings.getRandomExercise()
+              msg.reply.text(exercise.name)
+              msg.reply.text(exercise.description)
+            })
+
+        this.bot.on("/getCategories",
+            (msg)=> {
+              let trainings = new trainingsModel(this.exercisesCollection);
+              let categories = trainings.getCategories()
+              console.log(categories)
+              for(let category of categories){
+                msg.reply.text(category)
+              }
+            })
+
+        this.bot.on("/getExercise",
+            (msg)=> {
+              let trainings = new trainingsModel(this.exercisesCollection);
+              let exercises = trainings.getExercise('Arms',3)
+              for(let exercise of exercises){
+                msg.reply.text(exercise.name);
+                msg.reply.text(exercise.description)
+              }
+            })
+
         this.bot.on('/easterEgg',
             (gif) => {
                 this.bot.sendVideo(gif.from.id, "./media/easter/oZXvR.gif");
