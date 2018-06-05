@@ -53,6 +53,26 @@ class BotCommands {
               msg.reply.text(exercise.description)
             })
 
+        this.bot.on("/getCategories",
+            (msg)=> {
+              let trainings = new trainingsModel(this.exercisesCollection);
+              let categories = trainings.getCategories()
+              console.log(categories)
+              for(let category of categories){
+                msg.reply.text(category)
+              }
+            })
+
+        this.bot.on("/getExercise",
+            (msg)=> {
+              let trainings = new trainingsModel(this.exercisesCollection);
+              let exercises = trainings.getExercise('Arms',3)
+              for(let exercise of exercises){
+                msg.reply.text(exercise.name);
+                msg.reply.text(exercise.description)
+              }
+            })
+
         this.bot.on('/easterEgg',
             (gif) => {
                 this.bot.sendVideo(gif.from.id, "./media/easter/oZXvR.gif");

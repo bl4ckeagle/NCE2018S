@@ -5,11 +5,11 @@ class User {
 
         //check if user exists if not create a new one with name and id from telegram
 
-        if (userCollection.findOne({nce2018G2: id}) !== null) {
+        if (userCollection.find({'NCE2018G2.id':id}) !== null) {
             console.log("not null");
 
 
-            if (userCollection.findOne({nce2018G2: id}).id == id) {
+            if (userCollection.find({'NCE2018G2.id':id})) {
                 console.log("what?");
             }
         }
