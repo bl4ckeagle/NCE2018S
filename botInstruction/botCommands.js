@@ -33,7 +33,7 @@ class BotCommands {
                 console.log(userName); // get Names
                 console.log(userId); // get userID
                 let user = new userModel(userId, userName, this.userCollection);
-                console.log(user.absExp);
+                console.log(user.name);
                 msg.reply.text(user.name);
             });
         this.bot.on('/easterEgg',
