@@ -1,7 +1,5 @@
-//TODO create model as in user
-class Training{
-//  exercise = []
 
+class Trainig{
 
 
   constructor(exercisesCollection){
@@ -46,6 +44,4 @@ class Training{
 
 
 }
-
-
-module.exports = Training;
+module.exports =Trainig;

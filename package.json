@@ -15,12 +15,12 @@
     "bot",
     "HealthyLiving"
   ],
-  "author": "Oliver Guggenberger",
-  "license": "ISC",
+  "author": "none",
+  "license": "GPL",
   "dependencies": {
-    "lokijs": "^1.5.3",
-    "request": "^2.85.0",
-    "telebot": "^1.2.6"
+    "lokijs": "^1.5.5",
+    "request": "^2.87.0",
+    "telebot": "git+https://github.com/mullwar/telebot.git"
   },
   "bugs": {
     "url": "https://bitbucket.org/cosyhealthylivingbot/telegramexamplebot/issues"

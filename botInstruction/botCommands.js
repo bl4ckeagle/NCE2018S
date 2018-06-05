@@ -1,16 +1,12 @@
 const userModel = require("../model/User");
-const trainingsModel = require("../model/Training");
-
 const helper = require("../helper/helper");
 const userController = require("../controller/userController");
-const trainingsController = require("../controller/trainingsController");
 
 
 class BotCommands {
     constructor(bot, nceToken, baseUrl) {
         this.bot = bot;
         this.userCollection = null;
-        this.exercisesCollection = null;
         this.nceToken = nceToken;
         this.baseUrl = baseUrl;
         this.training = null;
@@ -19,11 +15,8 @@ class BotCommands {
         //get all collections from the api
         Promise.all([
             new userController(this.baseUrl, this.nceToken).getUser(),
-            new trainingsController(this.baseUrl).requestAllExercises(),
-        ]).then(([getUser,requestAllExercises]) => {
+        ]).then(([getUser]) => {
                 this.userCollection = helper.createCollection('user', getUser);
-              //  console.log("Users collection:" + JSON.stringify(this.userCollection))
-                this.exercisesCollection = helper.createCollection('exercises',requestAllExercises);
             }
         ).catch((e) => {
                 console.log(e + " in BotCommands check Manuel");
@@ -40,9 +33,8 @@ class BotCommands {
                 console.log(userName); // get Names
                 console.log(userId); // get userID
                 let user = new userModel(userId, userName, this.userCollection);
-                let trainings = new trainingsModel(this.exercisesCollection);
-                msg.reply.text("Hi,"+user.name + "!");
-                msg.reply.text("Type /randomExercise to get an exercise.")
+                console.log(user.name);
+                msg.reply.text(user.name);
             });
 
         this.bot.on("/randomExercise",
