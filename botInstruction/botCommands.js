@@ -35,21 +35,11 @@ class BotCommands {
                 let user = new userModel(userId, userName, this.userCollection);
                 console.log(user.absExp);
                 msg.reply.text(user.name);
-
             });
         this.bot.on('/easterEgg',
             (gif) => {
                 this.bot.sendVideo(gif.from.id, "./media/easter/oZXvR.gif");
                 console.log(gif.from.id);
-            });
-
-        this.bot.on('/test',
-            (msg) => {
-                let replyMarkup = bot.keyboard([
-                    ['/buttons', '/inlineKeyboard'],
-                    ['/start', '/hide']
-                ], {resize: true});
-                this.bot.sendMessage(msg.from.id, 'Keyboard example.', {replyMarkup});
             });
     };
 }
