@@ -1,6 +1,8 @@
 const userModel = require("../model/User");
 const helper = require("../helper/helper");
+const trainingsModel = require("../model/training");
 const userController = require("../controller/userController");
+const trainingsController = require("../controller/trainingsController");
 const request = require("request");
 
 class BotCommands {
@@ -15,8 +17,10 @@ class BotCommands {
         //get all collections from the api
         Promise.all([
             new userController(this.baseUrl, this.nceToken).getUser(),
-        ]).then(([getUser]) => {
+            new trainingsController(this.baseUrl, this.nceToken).requestAllExercises(),
+        ]).then(([getUser,getTraining]) => {
                 this.userCollection = helper.createCollection('user', getUser);
+                this.exercisesCollection=helper.createCollection('training',getTraining)
             }
         ).catch((e) => {
                 console.log(e + " in BotCommands check Manuel");
@@ -40,8 +44,8 @@ class BotCommands {
         this.bot.on("/randomExercise",
             (msg)=> {
               let trainings = new trainingsModel(this.exercisesCollection);
-              let exercise = trainings.getRandomExercise()
-              msg.reply.text(exercise.name)
+              let exercise = trainings.getRandomExercise();
+              msg.reply.text(exercise.name);
               msg.reply.text(exercise.description)
             })
 
@@ -58,7 +62,7 @@ class BotCommands {
         this.bot.on("/getExercise",
             (msg)=> {
               let trainings = new trainingsModel(this.exercisesCollection);
-              let exercises = trainings.getExercise('Arms',3)
+              let exercises = trainings.getExercise('Arms',3);
               for(let exercise of exercises){
                 msg.reply.text(exercise.name);
                 msg.reply.text(exercise.description)
