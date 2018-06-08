@@ -12,7 +12,8 @@ class TrainingsController {
    requestAllExercises()
     {
       //first request all categories
-      let p1 = new Promise(resolve => {
+      let baseUrl = this.baseUrl;
+      return new Promise(resolve => {
           let options =
           {
               url: this.baseUrl + "/exercise/category/",
@@ -30,33 +31,34 @@ class TrainingsController {
               }
           }
         )
-      });
-      //now we need to get exercises for each category
-      let baseUrl = this.baseUrl;
-      return p1.then(async function(res) {
+      }).then( (res) => {
         //get exercises for each categoryId
         let categories = res.body.results;//exercises by category\
-        for(var i = 0;i<categories.length;i++){
+
+        //categories[0].exercise = "exercise"
+        for(let i = 0;i<categories.length;i++){
           //request exercise for category
           let getExercises = new Promise(resolve => {
-            let options =
-              {
-              url: baseUrl + "/exercise/category/"+ categories[i].id,
-              json: true // Automatically parses the JSON string in the response
-              }
-              request(options, (error, response, body) => {
-                  if (error)
-                    console.log(error);
-                  if (!error && response.statusCode === 200) {
-                    //return pretty json
-                    resolve({body:body});
-                  }
-              }
-              )
+              let options =
+                {
+                url: baseUrl + "/exercise/category/"+ categories[i].id,
+                json: true // Automatically parses the JSON string in the response
+                }
+                request(options, (error, response, body) => {
+                    if (error)
+                      console.log(error);
+                    if (!error && response.statusCode === 200) {
+                      //return pretty json
+                     resolve({body:body});
+                    }
+                }
+                )
+          }).then((res) =>{
+            categories[i].exercise = res.body.results;
+          }).catch((e) => {
+            console.log(e + " in training connection");
           });
 
-          let ex = await getExercises;
-          categories[i].exercise = ex.body.results;
         }
         return categories
       })
