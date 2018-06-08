@@ -33,8 +33,8 @@ class BotCommands {
                 console.log(userName); // get Names
                 console.log(userId); // get userID
                 let user = new userModel(userId, userName, this.userCollection);
-                console.log(user.name);
-                msg.reply.text(user.name);
+                console.log(user);
+                msg.reply.text(userId );
             });
         this.bot.on('/easterEgg',
             (gif) => {

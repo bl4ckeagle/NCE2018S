@@ -5,10 +5,13 @@ class User {
 
         //check if user exists if not create a new one with name and id from telegram
 
-        if (userCollection.find({'NCE2018G1.id':id}).length>1) {
+        if (userCollection.find({'NCE2018G1.id':id}).length>0) {
            console.log("say");
+           let test = userCollection.findOne({'NCE2018G1.id':6587101});
+           console.log(test.absExp);
            if (userCollection.find({'NCE2018G1.id':id}) === id) {
                 console.log("what");
+
             }
             else{
                console.log("something happend")
