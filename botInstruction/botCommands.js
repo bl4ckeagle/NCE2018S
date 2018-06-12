@@ -47,7 +47,7 @@ class BotCommands {
               let exercise = trainings.getRandomExercise();
               msg.reply.text(exercise.name);
               msg.reply.text(exercise.description)
-            })
+            });
 
         this.bot.on("/getCategories",
             (msg)=> {
@@ -57,7 +57,7 @@ class BotCommands {
               for(let category of categories){
                 msg.reply.text(category)
               }
-            })
+            });
 
         this.bot.on("/getExercise",
             (msg)=> {
@@ -67,7 +67,7 @@ class BotCommands {
                 msg.reply.text(exercise.name);
                 msg.reply.text(exercise.description)
               }
-            })
+            });
 
         this.bot.on('/easterEgg',
             (gif) => {
