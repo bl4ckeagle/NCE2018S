@@ -3,27 +3,30 @@ const helper = require("../helper/helper");
 const trainingsModel = require("../model/training");
 const userController = require("../controller/userController");
 const trainingsController = require("../controller/trainingsController");
+const calendarController = require("../controller/calendarController");
+
 const request = require("request");
 
 class BotCommands {
     constructor(bot, nceToken, baseUrl) {
         this.bot = bot;
         this.userCollection = null;
+        this.exercisesCollection = null;
         this.nceToken = nceToken;
         this.baseUrl = baseUrl;
         this.training = null;
         this.calender = null;
-        this.defaultBot();
         //get all collections from the api
+        this.defaultBot();//to avoid ungandled promise in defaultBot
         Promise.all([
             new userController(this.baseUrl, this.nceToken).getUser(),
             new trainingsController(this.baseUrl, this.nceToken).requestAllExercises(),
         ]).then(([getUser,getTraining]) => {
-                this.userCollection = helper.createCollection('user', getUser);
                 this.exercisesCollection=helper.createCollection('training',getTraining)
+                //this.userCollection = helper.createCollection('user', getUser);
             }
         ).catch((e) => {
-                console.log(e + " in BotCommands check Manuel");
+                console.log(e + " LOOHin BotCommands check Manuel");
             }
         )
     }
@@ -36,18 +39,63 @@ class BotCommands {
 
                 console.log(userName); // get Names
                 console.log(userId); // get userID
-                let user = new userModel(userId, userName, this.userCollection);
-                console.log(user);
-                msg.reply.text(userId );
-            });
+                //let user = new userModel(userId, userName, this.userCollection);
+                //console.log(user);
+                this.bot.sendMessage(
+                  msg.from.id,
+                  "Hi, " + userName + "! \n Welcome to Healthy Living bot. ").then(()=>{
+                let replyMarkup = this.bot.inlineKeyboard([
+                    [
+                        this.bot.inlineButton('yep', {callback: 'chooseCat'})
+                    ]
+                ], {resize: true});
+
+                return this.bot.sendMessage(msg.from.id, 'Get an exercise!', {replyMarkup});
+
+            })
+          });
+
 
         this.bot.on("/randomExercise",
             (msg)=> {
               let trainings = new trainingsModel(this.exercisesCollection);
               let exercise = trainings.getRandomExercise();
-              msg.reply.text(exercise.name);
-              msg.reply.text(exercise.description)
-            });
+              this.bot.sendMessage(msg.from.id,exercise.name).then(()=>{
+              this.bot.sendMessage(msg.from.id,exercise.description)}).then(()=>{
+              let replyMarkup = this.bot.inlineKeyboard([
+                  [
+                      this.bot.inlineButton('done', {callback: 'exerciseDone'}),
+                  ]
+              ], {resize: true});
+
+              return this.bot.sendMessage(
+                msg.from.id,
+                'Press it when you\'ll finish :)',
+                {replyMarkup});
+            })
+          });
+
+        this.bot.on("/useCalendar",
+            (msg)=> {
+              Promise.all([
+                  new calendarController(this.baseUrl,43).getEvents("thisgreateman@gmail.com"),
+              ]).then(([getEvents]) => {
+                      //here must redirect to browser
+                      this.bot.sendMessage(msg.from.id,"Your events:").then(()=>{
+                        for(let event of getEvents){
+                          this.bot.sendMessage(msg.from.id,event.summary).then(()=>{
+                          this.bot.sendMessage("Start:" + msg.from.id,event.start.dateTime)}).then(()=>{
+                          this.bot.sendMessage("Start:" + msg.from.id,event.end.dateTime)})
+                        }
+                      }
+              ).catch((e) => {
+                      console.log(e + " in bot command authentificate");
+                  }
+              )
+            })
+          });
+
+
 
         this.bot.on("/getCategories",
             (msg)=> {
@@ -132,10 +180,62 @@ class BotCommands {
                     this.bot.sendMessage(msg.from.id, 'Please choose the exercise category:', {replyMarkup});
                     //this.bot.sendMessage(msg.from.id, String(res.body));
                     }
-                )
-            } else {
-                this.bot.sendMessage(msg.from.id, `We have to do something here!`);
+                )//if this is choose category button
+            //} else if(this.exercisesCollection.findOne({'name':msg.data})) {
+
+            }else if(this.exercisesCollection.findOne({'name':msg.data})){
+              let exercise = this.exercisesCollection.findOne({'name':msg.data}).exercise[0]
+              // this.bot.sendMessage("msg.from.id,exercise.name")
+              // console.log(this.exercisesCollection)
+              // let trainings = new trainingsModel(this.exercisesCollection)
+              // let exercise = trainings.getExercise(msg.data,1)
+              this.bot.sendMessage(msg.from.id,exercise.name).then(()=>{
+              this.bot.sendMessage(msg.from.id,exercise.description)}).then(()=>{
+              let replyMarkup = this.bot.inlineKeyboard([
+                  [
+                      this.bot.inlineButton('done', {callback: 'exerciseDone'}),
+                  ]
+              ], {resize: true});
+
+              return this.bot.sendMessage(
+                msg.from.id,
+                'Press it when you\'ll finish :)',
+                {replyMarkup});
+            })
+          }
+
+            else if(msg.data== "useCalendar"){
+              Promise.all([
+                  new calendarController(this.baseUrl,43).authentificate(),
+              ]).then(([authentificate]) => {
+                      //here must redirect to browser
+                      this.bot.sendMessage(msg.from.id,"Go to this link to connect your google calendar.")
+                      this.bot.sendMessage(msg.from.id,authentificate)
+                      }
+              ).catch((e) => {
+                      console.log(e + " in bot command authentificate");
+                  }
+              )
+
+            }else if(msg.data == "exerciseDone"){
+              this.bot.sendMessage(
+                msg.from.id,
+                "Nice! You got +1 expirience points.");
+
+
+              let replyMarkup = this.bot.inlineKeyboard([
+                  [
+                      this.bot.inlineButton('yes', {callback: 'useCalendar'}),
+                      this.bot.inlineButton('no', {callback: 'dontUseCalendar'})
+                  ]
+              ], {resize: true});
+
+              return this.bot.sendMessage(
+                msg.from.id,
+                "Can I use your google calendar to know when to remind you about trainigs?",
+                {replyMarkup});
             }
+
         })
 
     };

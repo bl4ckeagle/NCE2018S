@@ -20,19 +20,21 @@ class UserController {
                     }
                 };
             request.get(options, (error, response, body) => {
+                    console.log(response.statusCode);
                     if (error)
                         console.log("get user Throws an error, check");
 
                     if (!error && response.statusCode === 200) {
                         //return pretty json
                         //show first exercise of this category
-                        resolve({body: body});
                     }
+                    resolve({body: body});
                 }
             )
 
         });
         return p1.then((res) => {
+                console.log("here");
                 return res.body
             }
         )

@@ -1,11 +1,8 @@
 
 class Trainig{
-
-
   constructor(exercisesCollection){
     //this.exercisesCollection = JSON.parse(JSON.stringify(exercisesCollection))
     this.exercisesCollection = exercisesCollection
-    //console.log(this.exercise[0].exercise)
   }
 
   getRandomExercise() {
@@ -27,11 +24,14 @@ class Trainig{
 
   getExercise(categoryName,lvl){
     let category = this.exercisesCollection.findOne({'name':categoryName});
+    if(category===null){
+      return null
+    }
 
     if(lvl>category.exercise.length){
       lvl = category.exercise.length
     }
-    
+
     let exercises = []
     for(let i = 0; i<lvl; i++ ){
       exercises.push(category.exercise[i])
