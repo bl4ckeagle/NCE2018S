@@ -75,37 +75,7 @@ class BotCommands {
             })
           });
 
-        this.bot.on("/useCalendar",
-            (msg)=> {
-              Promise.all([
-                  new calendarController(this.baseUrl,43).getEvents("thisgreateman@gmail.com"),
-              ]).then(([getEvents]) => {
-                      //here must redirect to browser
-                      this.bot.sendMessage(msg.from.id,"Your events:").then(()=>{
-                        for(let event of getEvents){
-                          this.bot.sendMessage(msg.from.id,event.summary).then(()=>{
-                          this.bot.sendMessage("Start:" + msg.from.id,event.start.dateTime)}).then(()=>{
-                          this.bot.sendMessage("Start:" + msg.from.id,event.end.dateTime)})
-                        }
-                      }
-              ).catch((e) => {
-                      console.log(e + " in bot command authentificate");
-                  }
-              )
-            })
-          });
 
-
-
-        this.bot.on("/getCategories",
-            (msg)=> {
-              let trainings = new trainingsModel(this.exercisesCollection);
-              let categories = trainings.getCategories();
-              console.log(categories);
-              for(let category of categories){
-                msg.reply.text(category)
-              }
-            });
 
         this.bot.on("/getExercise",
             (msg)=> {
