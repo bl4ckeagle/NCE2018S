@@ -17,7 +17,7 @@ class BotCommands {
         this.training = null;
         this.calender = null;
         //get all collections from the api
-        this.defaultBot();//to avoid ungandled promise in defaultBot
+        this.defaultBot(); //to avoid ungandled promise in defaultBot
         Promise.all([
             new userController(this.baseUrl, this.nceToken).getUser(),
             new trainingsController(this.baseUrl, this.nceToken).requestAllExercises(),
@@ -100,8 +100,8 @@ class BotCommands {
         this.bot.on("/getCategories",
             (msg)=> {
               let trainings = new trainingsModel(this.exercisesCollection);
-              let categories = trainings.getCategories()
-              console.log(categories)
+              let categories = trainings.getCategories();
+              console.log(categories);
               for(let category of categories){
                 msg.reply.text(category)
               }
@@ -138,7 +138,7 @@ class BotCommands {
         this.bot.on('callbackQuery', (msg) => {
             //this.bot.sendMessage(msg.from.id, `Hello, ${ msg.from.first_name }!`);
 
-            if(msg.data == "chooseCat") {
+            if(msg.data === "chooseCat") {
                 let p1 = new Promise(resolve => {
                     let options =
                         {
@@ -165,7 +165,7 @@ class BotCommands {
                     let exCategories = res.body.results;
                     let buttons = [];
 
-                    for(var i = 0; i < exCategories.length; i++) {
+                    for(let i = 0; i < exCategories.length; i++) {
                         //console.log(exCategories[i].name);
                         let buttonsSub = [];
                         buttonsSub.push(this.bot.inlineButton(exCategories[i].name, {callback: exCategories[i].name}));
