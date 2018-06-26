@@ -17,7 +17,7 @@ class BotCommands {
         this.training = null;
         this.calender = null;
         //get all collections from the api
-        this.defaultBot(); //to avoid ungandled promise in defaultBot
+        this.defaultBot();//to avoid ungandled promise in defaultBot
         Promise.all([
             new userController(this.baseUrl, this.nceToken).getUser(),
             new trainingsController(this.baseUrl, this.nceToken).requestAllExercises(),
@@ -75,7 +75,71 @@ class BotCommands {
             })
           });
 
+        this.bot.on("/useCalendar",
+          (msg)=> {
+            console.log("hu")
+            Promise.all([
+              new calendarController(this.baseUrl,43).getEvents(43,"thisgreateman@gmail.com"),
+            ]).then(([getEvents]) => {
+              //here must redirect to browser
+              console.log(getEvents)
+              this.bot.sendMessage(msg.from.id,"Your events:").then(()=>{
+                for(let event of getEvents){
+                  this.bot.sendMessage(msg.from.id,event.summary).then(()=>{
+                    this.bot.sendMessage("Start:" + msg.from.id,event.start.dateTime)}).then(()=>{
+                      this.bot.sendMessage("Start:" + msg.from.id,event.end.dateTime)})
+                }
+              })
+            }).catch((e) => {
+              console.log(e + " in bot command authentificate");
+            })
+          }
+        );
 
+
+        // type /setEvent 14:15
+        this.bot.on(/^\/setEvent (.+)$/, (msg, props) => {
+
+              let time = props.match[1];
+              //console.log(time);
+              let today = new Date()
+              let tomorrow = new Date(today)
+              tomorrow.setDate(today.getDate() + 1)
+              time = time.split(":")
+              tomorrow.setUTCHours(time[0])
+              tomorrow.setUTCMinutes(time[1])
+              let startTime = JSON.stringify(tomorrow)
+              let endTime = JSON.stringify(new Date(tomorrow.getTime() + 15*60000))
+              startTime = startTime.substr(1,startTime.indexOf('.')-1) + "+02:00"
+              endTime = endTime.substr(1,endTime.indexOf('.')-1) + "+02:00"
+
+              // console.log(startTime);
+              // console.log(endTime);
+
+              Promise.all([
+                new calendarController(this.baseUrl,43)
+                .setEvent(43,"thisgreateman@gmail.com"
+                          ,"Exercise","Some sescription"
+                          ,startTime
+                          ,endTime),
+              ]).then(([getEvents]) => {
+                this.bot.sendMessage(getEvents)
+              }).catch((e) => {
+                console.log(e + " in bot set event");
+              })
+          }
+        );
+
+
+        this.bot.on("/getCategories",
+            (msg)=> {
+              let trainings = new trainingsModel(this.exercisesCollection);
+              let categories = trainings.getCategories()
+              console.log(categories)
+              for(let category of categories){
+                msg.reply.text(category)
+              }
+            });
 
         this.bot.on("/getExercise",
             (msg)=> {
@@ -108,7 +172,7 @@ class BotCommands {
         this.bot.on('callbackQuery', (msg) => {
             //this.bot.sendMessage(msg.from.id, `Hello, ${ msg.from.first_name }!`);
 
-            if(msg.data === "chooseCat") {
+            if(msg.data == "chooseCat") {
                 let p1 = new Promise(resolve => {
                     let options =
                         {
@@ -135,7 +199,7 @@ class BotCommands {
                     let exCategories = res.body.results;
                     let buttons = [];
 
-                    for(let i = 0; i < exCategories.length; i++) {
+                    for(var i = 0; i < exCategories.length; i++) {
                         //console.log(exCategories[i].name);
                         let buttonsSub = [];
                         buttonsSub.push(this.bot.inlineButton(exCategories[i].name, {callback: exCategories[i].name}));
