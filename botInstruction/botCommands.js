@@ -8,7 +8,7 @@ const calendarController = require("../controller/calendarController");
 const request = require("request");
 
 class BotCommands {
-    constructor(bot, nceToken, baseUrl) {
+    constructor(bot, nceToken, baseUrl,userCollection,exercisesCollection) {
         this.bot = bot;
         this.userCollection = null;
         this.exercisesCollection = null;
@@ -23,10 +23,10 @@ class BotCommands {
             new trainingsController(this.baseUrl, this.nceToken).requestAllExercises(),
         ]).then(([getUser,getTraining]) => {
                 this.exercisesCollection=helper.createCollection('training',getTraining)
-                //this.userCollection = helper.createCollection('user', getUser);
+                this.userCollection = helper.createCollection('user', getUser);
             }
         ).catch((e) => {
-                console.log(e + " LOOHin BotCommands check Manuel");
+                console.log(e + " Login BotCommands check Manuel");
             }
         )
     }
@@ -36,6 +36,7 @@ class BotCommands {
             (msg) => {
                 let userId = msg.from.id;
                 let userName = msg.from.first_name;
+                let user = new userModel(userId,userName,this.userCollection);
 
                 console.log(userName); // get Names
                 console.log(userId); // get userID
@@ -49,6 +50,7 @@ class BotCommands {
                         this.bot.inlineButton('yep', {callback: 'chooseCat'})
                     ]
                 ], {resize: true});
+
 
                 return this.bot.sendMessage(msg.from.id, 'Get an exercise!', {replyMarkup});
 

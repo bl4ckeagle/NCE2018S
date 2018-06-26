@@ -4,165 +4,94 @@ class User {
     constructor(id, name, userCollection) {
 
         //check if user exists if not create a new one with name and id from telegram
+        this.userCollection=userCollection;
+        if (this.userCollection.find({'NCE2018G1.id': id}).length > 0) {
+            this.myUser = this.userCollection.findOne({'NCE2018G1.id': id});
+            console.log(this.myUser.NCE2018G1);
 
-        if (userCollection.find({'NCE2018G1.id':id}).length>0) {
-           console.log("say");
-           let test = userCollection.findOne({'NCE2018G1.id':6587101});
-           console.log(test.absExp);
-           if (userCollection.find({'NCE2018G1.id':id}) === id) {
-                console.log("what");
+            if (this.myUser.NCE2018G1.id=== id) {
+
+                this.id=this.myUser.NCE2018G1.id;
+                this.name=this.myUser.NCE2018G1.name;
+                this.exp=this.myUser.NCE2018G1.exp;
+                this.lvl=this.myUser.NCE2018G1.lvl;
+
+                console.log(this.myUser.NCE2018G1.exp);
+
+
+
 
             }
-            else{
-               console.log("something happend")
-           }
+            else {
+
+            }
         }
         else {
             console.log("new user");
             //id username
             this._id = id;
             this._name = name;
-            //level
-            this._ArmsLvl = 0;
-            this._legsLvl = 0;
-            this._absLvl = 0;
-            this._chestLvl = 0;
-            this._backLvl = 0;
-            this._shouldersLvl = 0;
-            this._calvesLvl = 0;
-            //exp
-            this._ArmsExp = 0;
-            this._legsExp = 0;
-            this._absExp = 0;
-            this._chestExp = 0;
-            this._backExp = 0;
-            this._shouldersExp = 0;
-            this._calvesExp = 0;
+            this._exp = 0;
+            this._lvl = 0;
         }
 
     }
 
-    //getter
     get id() {
         return this._id;
+    }
+
+    set id(value) {
+        this._id = value;
     }
 
     get name() {
         return this._name;
     }
 
-    get ArmsLvl() {
-        return this._ArmsLvl;
+    set name(value) {
+        this._name = value;
     }
 
-    get legsLvl() {
-        return this._legsLvl;
+    get userCollection() {
+        return this._userCollection;
     }
 
-    get absLvl() {
-        return this._absLvl;
+    set userCollection(value) {
+        this._userCollection = value;
     }
 
-    get chestLvl() {
-        return this._chestLvl;
+    get exp() {
+        return this._exp;
     }
 
-    get backLvl() {
-        return this._backLvl;
+    set exp(value) {
+        this._exp = +value;
+        if (this.exp >=100)
+        {
+            this._lvl=+1;
+            this._exp=0;
+            this.levelUp();
+
+        }
     }
 
-    get shouldersLvl() {
-        return this._shouldersLvl;
+    get lvl() {
+        return this._lvl;
     }
 
-    get calvesLvl() {
-        return this._calvesLvl;
+
+    set lvl(value) {
+        this._lvl = value;
     }
 
-    get ArmsExp() {
-        return this._ArmsExp;
+    levelUp()
+    {
+        return "hurray you got an level up"
     }
+    save()
+    {
 
-    get legsExp() {
-        return this._legsExp;
-    }
-
-    get absExp() {
-        return this._absExp;
-    }
-
-    get chestExp() {
-        return this._chestExp;
-    }
-
-    get backExp() {
-        return this._backExp;
-    }
-
-    get shouldersExp() {
-        return this._shouldersExp;
-    }
-
-    get calvesExp() {
-        return this._calvesExp;
-    }
-
-    //setter
-
-    set ArmsLvl(value) {
-        this._ArmsLvl = value;
-    }
-
-    set legsLvl(value) {
-        this._legsLvl = value;
-    }
-
-    set absLvl(value) {
-        this._absLvl = value;
-    }
-
-    set chestLvl(value) {
-        this._chestLvl = value;
-    }
-
-    set backLvl(value) {
-        this._backLvl = value;
-    }
-
-    set shouldersLvl(value) {
-        this._shouldersLvl = value;
-    }
-
-    set calvesLvl(value) {
-        this._calvesLvl = value;
-    }
-
-    set ArmsExp(value) {
-        this._ArmsExp = value;
-    }
-
-    set legsExp(value) {
-        this._legsExp = value;
-    }
-
-    set absExp(value) {
-        this._absExp = value;
-    }
-
-    set chestExp(value) {
-        this._chestExp = value;
-    }
-
-    set backExp(value) {
-        this._backExp = value;
-    }
-
-    set shouldersExp(value) {
-        this._shouldersExp = value;
-    }
-
-    set calvesExp(value) {
-        this._calvesExp = value;
     }
 }
 

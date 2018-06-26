@@ -13,7 +13,7 @@ class UserController {
         let p1 = new Promise(resolve => {
             let options =
                 {
-                    url: this.baseUrl + "/user/",
+                    url: this.baseUrl + "/users/",
                     json: true,
                     headers: {
                         token: this.nceToken
@@ -33,12 +33,11 @@ class UserController {
             )
 
         });
-        return p1.then((res) => {
-                console.log("here");
-                return res.body
-            }
-        )
-    };
+
+        return p1.then(x => {
+            return x.body
+        });
+    }
 
 
     postUser() {
