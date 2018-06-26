@@ -40,20 +40,31 @@ class UserController {
     }
 
 
-    postUser() {
-        request.get({
-            url: this.baseUrl + "/exercise/category/",
-            json: true // Automatically parses the JSON string in the response
-        }, (error, response, body) => {
-            if (error)
-                console.log(error);
+    postUser(collection) {
+        let options = { method: 'POST',
+            url: 'http://healthylivingbot.cosy.univie.ac.at:5000/user/',
+            headers:
+                {   'Cache-Control': 'no-cache',
+                    'Content-Type': 'application/json',
+                    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.OTF_oJRoInPZcBF9Ep2uut73Qd0HY4z0l6ssxyNwXs0' },
+            body:
+                { NCE2018G1: { lvl: collection.lvl, id: collection.lvl, exp: collection.exp, name: collection.name },
+                    telegram_id: collection.id,
+                    name:collection.id},
+            json: true };
 
-            if (!error && response.statusCode === 200) {
-                //return pretty json
-                //show first exercise of this category
-
-            }
+        request(options, function (error, response, body) {
+            if (error) throw new Error(error);
+            console.log(collection.id)
+            console.log("posted");
+            console.log(body);
         });
+
+
+    }
+    updateUser()
+    {
+
 
     }
 

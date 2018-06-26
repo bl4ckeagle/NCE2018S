@@ -50,6 +50,7 @@ class BotCommands {
                         this.bot.inlineButton('yep', {callback: 'chooseCat'})
                     ]
                 ], {resize: true});
+                user.save();
 
 
                 return this.bot.sendMessage(msg.from.id, 'Get an exercise!', {replyMarkup});
