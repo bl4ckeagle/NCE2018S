@@ -7,11 +7,13 @@ class User {
 
         //check if user exists if not create a new one with name and id from telegram
         this.userCollection = userCollection;
+        this.myUser = {};
         if (this.userCollection.find({'NCE2018G1.id': id}).length > 0) {
             this.myUser = this.userCollection.findOne({'NCE2018G1.id': id});
             console.log(this.myUser.NCE2018G1);
 
             if (this.myUser.NCE2018G1.id === id) {
+                console.log(this.myUser.NCE2018G1.id);
                 this.id = this.myUser.NCE2018G1.id;
                 this.name = this.myUser.NCE2018G1.name;
                 this.exp = this.myUser.NCE2018G1.exp;
@@ -23,14 +25,23 @@ class User {
         }
         else {
             console.log("new user");
+            console.log(id);
             //id username
             this._id = id;
             this._name = name;
             this._exp = 0;
             this._lvl = 0;
-        }
 
+            this.myUser = {
+                'name': this.name, 'telegram_id': this.id, 'NCE2018G1': {
+                    id: this.id, name: this.name, exp: this.exp, lvl: this.lvl
+                }
+
+            }
+
+        }
     }
+
 
     get id() {
         return this._id;
@@ -62,16 +73,21 @@ class User {
 
     set exp(value) {
         this._exp = +value;
+
+    }
+
+    levelUp(exp) {
+        this.exp+=exp;
         if (this.exp >= 100) {
             this._lvl = +1;
             this._exp = 0;
-            this.levelUp();
+            User.levelUpMessage();
             this.myUser.NCE2018G1.exp = this.exp;
             this.myUser.NCE2018G1.lvl = this.lvl;
-            this.userCollection.update(this.myUser);
             this.save();
 
         }
+
     }
 
     get lvl() {
@@ -83,26 +99,23 @@ class User {
         this._lvl = value;
     }
 
-    levelUp() {
+    static levelUpMessage() {
         return "hurray you got an level up"
     }
 
     save() {
         let userController = new USER_CONTROLLER();
 
-        console.log(this.userCollection.findOne({'NCE2018G1.id': this.id}) === null);
-        if (this.myUser = this.userCollection.findOne({'NCE2018G1.id': this.id}) === null) {
-            let myUser = {
-                id: this.id,
-                name: this.name,
-                exp: this.exp,
-                lvl: this.lvl
-            };
+
+        console.log(typeof  this.myUser.id === 'undefined');
+        console.log(this.myUser.id);
 
 
-            console.log(myUser.name);
+        if ((typeof  this.myUser.id === 'undefined')) {
+
+
             console.log("save");
-            userController.postUser(myUser);
+            userController.postUser(this.myUser);
         } else {
             console.log();
             console.log("update");

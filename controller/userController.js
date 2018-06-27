@@ -48,14 +48,18 @@ class UserController {
                     'Content-Type': 'application/json',
                     token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.OTF_oJRoInPZcBF9Ep2uut73Qd0HY4z0l6ssxyNwXs0' },
             body:
-                { NCE2018G1: { lvl: collection.lvl, id: collection.lvl, exp: collection.exp, name: collection.name },
-                    telegram_id: collection.id,
-                    name:collection.id},
+                { NCE2018G1: {
+                        lvl: collection.NCE2018G1.lvl,
+                        id: collection.NCE2018G1.id,
+                        exp: collection.NCE2018G1.exp,
+                        name: collection.NCE2018G1.name },
+                    telegram_id: collection.NCE2018G1.id,
+                    name:collection.NCE2018G1.name},
             json: true };
 
         request(options, function (error, response, body) {
             if (error) throw new Error(error);
-            console.log(collection.id)
+            console.log(collection.id);
             console.log("posted");
             console.log(body);
         });
