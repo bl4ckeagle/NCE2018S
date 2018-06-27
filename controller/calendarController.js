@@ -17,7 +17,7 @@ class CalendarController {
 
                 if (!error && response.statusCode === 200) {
                     //return pretty json
-                    //show first exercise of this category
+                    //show first exercise.js of this category
                     resolve({body: body});
                 }
             }
@@ -43,7 +43,7 @@ class CalendarController {
 
                 if (!error && response.statusCode === 200) {
                     //return pretty json
-                    //show first exercise of this category
+                    //show first exercise.js of this category
                     resolve({body: body});
                 }
             }
@@ -83,7 +83,7 @@ class CalendarController {
 
                         if (!error && response.statusCode === 200) {
                             //return pretty json
-                            //show first exercise of this category
+                            //show first exercise.js of this category
                             resolve({body: body});
                         }
                     })

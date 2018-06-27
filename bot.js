@@ -1,23 +1,40 @@
-const TeleBot = require('telebot');
-const helper = require("./helper/helper");
-const nceDefaultbotCommands = require("./botInstruction/ncedefaultbot");
-const botComamnds = require("./botInstruction/botCommands");
-const baseUrl = "http://healthylivingbot.cosy.univie.ac.at:5000";
-const key = helper.getTelegramKey();
-const TELEGRAM_BOT_TOKEN = key;
-const bot = new TeleBot(TELEGRAM_BOT_TOKEN);
+const TELE_BOT = require('telebot');
+const EXERCISE = require('./model/exercise');
+const HELPER = require("./helper/helper");
+const NCE_DEFAULT_BOT_COMMANDS = require("./botInstruction/ncedefaultbot");
+const BOT_COMMANDS = require("./botInstruction/botCommands");
+const BASE_URL = "http://healthylivingbot.cosy.univie.ac.at:5000";
+const TELEGRAM_BOT_TOKEN = HELPER.getTelegramKey();
+const EXERCISE_CONTROLLER = require('./controller/exerciseController');
+const bot = new TELE_BOT(TELEGRAM_BOT_TOKEN);
 
 //initlise bot with api token and nce token
 Promise.all([
-    helper.getAccessToken(baseUrl)]
-).then(([nceToken]) => {
 
-        console.log("my token " + nceToken);
-        new nceDefaultbotCommands(bot, nceToken, baseUrl);
-        new botComamnds(bot,nceToken,baseUrl);
-        bot.start();
-    }
-).catch((error) => {
+        HELPER.getAccessToken(BASE_URL),
+        excersizes = new EXERCISE_CONTROLLER().getExercise()
+    ]
+)
+    .then(([nceToken, exerciseCollection]) => {
+        let exercise = new EXERCISE(exerciseCollection);
+        console.log(exercise.randomizer());
+
+        return [nceToken, exercise];
+
+    })
+    .then(([nceToken, exercise]) => {
+
+            console.log("here");
+
+
+
+
+            console.log("my token " + nceToken);
+            new NCE_DEFAULT_BOT_COMMANDS(bot, nceToken, BASE_URL);
+            new BOT_COMMANDS(bot, nceToken, BASE_URL, exercise);
+            bot.start();
+        }
+    ).catch((error) => {
     console.log(error)
 });
 
