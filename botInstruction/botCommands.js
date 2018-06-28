@@ -17,6 +17,7 @@ class BotCommands {
         this.scheduler;
         this.exercise = exercise;
         this.calenderID = null;
+        this.user = null;
         //get all collections from the api
         this.defaultBot();//to avoid ungandled promise in defaultBot
         Promise.all([
@@ -63,25 +64,25 @@ class BotCommands {
             })
           });
 
-
-        this.bot.on("/randomExercise",
-            (msg)=> {
-              let trainings = new trainingsModel(this.exercisesCollection);
-              let exercise = trainings.getRandomExercise();
-              this.bot.sendMessage(msg.from.id,exercise.name).then(()=>{
-              this.bot.sendMessage(msg.from.id,exercise.description)}).then(()=>{
-              let replyMarkup = this.bot.inlineKeyboard([
-                  [
-                      this.bot.inlineButton('done', {callback: 'exerciseDone'}),
-                  ]
-              ], {resize: true});
-
-              return this.bot.sendMessage(
-                msg.from.id,
-                'Press it when you\'ll finish :)',
-                {replyMarkup});
-            })
-          });
+        //
+        // this.bot.on("/randomExercise",
+        //     (msg)=> {
+        //       let trainings = new trainingsModel(this.exercisesCollection);
+        //       let exercise = trainings.getRandomExercise();
+        //       this.bot.sendMessage(msg.from.id,exercise.name).then(()=>{
+        //       this.bot.sendMessage(msg.from.id,exercise.description)}).then(()=>{
+        //       let replyMarkup = this.bot.inlineKeyboard([
+        //           [
+        //               this.bot.inlineButton('done', {callback: 'exerciseDone'}),
+        //           ]
+        //       ], {resize: true});
+        //
+        //       return this.bot.sendMessage(
+        //         msg.from.id,
+        //         'Press it when you\'ll finish :)',
+        //         {replyMarkup});
+        //     })
+        //   });
 
 
         this.bot.on("/useCalendar",
@@ -126,14 +127,40 @@ class BotCommands {
               // console.log(startTime);
               // console.log(endTime);
 
+              //get exercises
+              let userId = msg.from.id;
+              let userName = msg.from.first_name;
+              let user = new userModel(userId,userName,this.userCollection);
+              let exercises = this.exercise.randomizer(user.lvl)
+
+              let num = 1;
+              let description = ""
+              for(let exercise of exercises){
+              description+= "Exercise " + num +": " + exercise.name + "\n"
+              num++;
+              }
+
+
               Promise.all([
                 new calendarController(this.baseUrl,43)
                 .setEvent(43,this.calendar//"thisgreateman@gmail.com"
-                          ,"Exercise","Some description"
+                          ,"Exercise slot",description
                           ,startTime
                           ,endTime),
               ]).then(([setEvent]) => {
-                this.bot.sendMessage(msg.from.id,"Nice! I just added an event to your calendar, so you won't forget it.");
+                this.bot.sendMessage(msg.from.id,"Nice! I just added an event to your calendar"+
+                                                ", so you won't forget it.\n" +
+                                                "Your exercises:").then(()=>{
+
+                for(let exercise of exercises){
+                  this.bot.sendMessage(msg.from.id,exercise.name).then(()=>{
+                  this.bot.sendMessage(msg.from.id,exercise.description)}).then(()=>{
+                    msg.reply.photo(exercise.file)
+                  })
+                  //this.bot.sendVideo(gif.from.id, exercise.file);
+                }
+                });
+
               }).catch((e) => {
                 console.log(e + " in bot set event");
               })
@@ -154,12 +181,13 @@ class BotCommands {
 
         this.bot.on("/getExercise",
             (msg)=> {
-              let trainings = new trainingsModel(this.exercisesCollection);
-              //let exercises = trainings.getExercise('Arms',3);
-              for(let exercise of exercises){
-                msg.reply.text(exercise.name);
-                msg.reply.text(exercise.description)
-              }
+              //get exercise
+              let userId = msg.from.id;
+              let userName = msg.from.first_name;
+              let user = new userModel(userId,userName,this.userCollection);
+              exercises = this.exercise.randomizer(lvl)
+              //display exercises
+
             });
 
         this.bot.on('/easterEgg',
