@@ -1,102 +1,100 @@
 {
   "all": [
     {
-
-        "name": "Neck and Shoulders",
-        "description": "Working in the office can be quite exhausting. For example, when you’re hunched over your desk you can strain the cervical spine and stiffen your shoulders. To avoid this uncomfortable experience you can perform the simple exercise, that will relax your shoulders and neck. The process is simple, stand up and try to reach your arms behind you interlocking your fingers and lifting arms at the same time. Ideally, you should feel the stretch in shoulders and chest while you’re performing the exercise. Repeat several reps.",
-        "file": "./pix/neckandshoulders.jpg"
-
+      "name": "Neck and Shoulders",
+      "description": "Working in the office can be quite exhausting. For example, when you’re hunched over your desk you can strain the cervical spine and stiffen your shoulders. To avoid this uncomfortable experience you can perform the simple exercise, that will relax your shoulders and neck. The process is simple, stand up and try to reach your arms behind you interlocking your fingers and lifting arms at the same time. Ideally, you should feel the stretch in shoulders and chest while you’re performing the exercise. Repeat several reps.",
+      "file": "./pix/neckandshoulders.jpg",
+      "exp":5
     },
     {
-
-        "name": "Wrist stretch",
-        "description": "This is the perfect exercise for all people who spend a lot of time typing. To perform it you should stand up, place wrists onto your desk make sure they face away from you, and then start applying pressure until you feel the stretch. Stay in that position for a few seconds. After the exercise, perform a few wrist circles. Do this exercise several times a day to ease the tension on your wrist.",
-        "file": "./pix/wriststretch.jpg"
-
+      "name": "Wrist stretch",
+      "description": "This is the perfect exercise for all people who spend a lot of time typing. To perform it you should stand up, place wrists onto your desk make sure they face away from you, and then start applying pressure until you feel the stretch. Stay in that position for a few seconds. After the exercise, perform a few wrist circles. Do this exercise several times a day to ease the tension on your wrist.",
+      "file": "./pix/wriststretch.jpg",
+      "exp":2
     },
     {
-
-        "name": "Calf raises",
-        "description": "Stand in front of a desk or other piece of furniture you can hold on to for balance. Raise your heels of the floor and slowly lower them.",
-        "file": "./pix/calfraises.jpg"
-
+      "name": "Calf raises",
+      "description": "Stand in front of a desk or other piece of furniture you can hold on to for balance. Raise your heels of the floor and slowly lower them.",
+      "file": "./pix/calfraises.jpg",
+      "exp":5
     },
     {
-
-        "name": "Flapping wings",
-        "description": "Stretch both of your arms up and back, as far as you can. Bring them forward until they meet and stretch your arms out in front of you. Repeat 50 times.",
-        "file": "./pix/flappingwings.jpg"
-
+      "name": "Flapping wings",
+      "description": "Stretch both of your arms up and back, as far as you can. Bring them forward until they meet and stretch your arms out in front of you. Repeat 50 times.",
+      "file": "./pix/flappingwings.jpg",
+      "exp":5
     },
     {
-
-        "name": "Wall sit",
-        "description": "Rest your back against a wall and move your feet away from the wall. The wall should be supporting the weight of your back and your knees should be bent. Hold the position as long as possible.",
-        "file": "./pix/wallsit.jpg"
-
+      "name": "Wall sit",
+      "description": "Rest your back against a wall and move your feet away from the wall. The wall should be supporting the weight of your back and your knees should be bent. Hold the position as long as possible.",
+      "file": "./pix/wallsit.jpg",
+      "exp":20
     },
     {
-
-        "name": "Chair squats",
-        "description": "Lift your rear end off of your seat and hold for a few seconds.",
-        "file": "./pix/chairsquat.jpg"
-
+      "name": "Chair squats",
+      "description": "Lift your rear end off of your seat and hold for a few seconds.",
+      "file": "./pix/chairsquat.jpg",
+      "exp":10
     },
     {
-
-        "name": "Torso Twist",
-        "description": "Place feet firmly on floor and place one hand on the back of your chair. Exhale and twist your upper body toward the arm on chair back, using your other hand to press against your leg for leverage. Hold for 2 to 3 deep breaths and repeat on other side.",
-        "file": "./pix/torsotwist.jpg"
-
+      "name": "Torso Twist",
+      "description": "Place feet firmly on floor and place one hand on the back of your chair. Exhale and twist your upper body toward the arm on chair back, using your other hand to press against your leg for leverage. Hold for 2 to 3 deep breaths and repeat on other side.",
+      "file": "./pix/torsotwist.jpg",
+      "exp":10
     },
     {
-
-        "name": "Spider-Man Mountain Climbers",
-        "description": "Start in a high plank. Drive your right knee out and up toward your right tricep. As you do, turn your head to watch your knee meet your arm. Alternate sides as fast as you can while still maintaining a sturdy plank and keeping your torso in place.",
-        "file":"./pix/spidermanmountainclimbers.gif"
-
+      "name": "Spider-Man Mountain Climbers",
+      "description": "Start in a high plank. Drive your right knee out and up toward your right tricep. As you do, turn your head to watch your knee meet your arm. Alternate sides as fast as you can while still maintaining a sturdy plank and keeping your torso in place.",
+      "file": "./pix/spidermanmountainclimbers.gif",
+      "exp":20
     },
     {
-
-        "name": "Skater Hops",
-        "description": "Starting at the left of your space, squat slightly then jump to the right as far as you can. Land on your right foot and try not to touch your left foot down. Jump back across to land on your left foot.",
-        "file": "./pix/skaterhops.gif"
-
+      "name": "Skater Hops",
+      "description": "Starting at the left of your space, squat slightly then jump to the right as far as you can. Land on your right foot and try not to touch your left foot down. Jump back across to land on your left foot.",
+      "file": "./pix/skaterhops.gif",
+      "exp":20
     },
     {
-        "name": "Standing Oblique Crunches",
-        "description": "Stand with your feet hip-width apart and hands behind your head and elbows wide. Lift your left knee toward your left elbow while you bend your torso up and over to the left. Repeat on the other side.",
-        "file": "./pix/standingobliquecrunches.gif"
+      "name": "Standing Oblique Crunches",
+      "description": "Stand with your feet hip-width apart and hands behind your head and elbows wide. Lift your left knee toward your left elbow while you bend your torso up and over to the left. Repeat on the other side.",
+      "file": "./pix/standingobliquecrunches.gif",
+      "exp":20
     },
     {
-        "name": "Froggers",
-        "description": "Stand with your legs wider than hip-width apart, knees bent, and upper body hinged slightly forward. Place your hands on the ground in front of you, then jump your straight legs back into a high plank. Jump your feet to the outsides of your hands and bring your hands toward your chest to return to the starting position.",
-        "file": "./pix/froggers.gif"
+      "name": "Froggers",
+      "description": "Stand with your legs wider than hip-width apart, knees bent, and upper body hinged slightly forward. Place your hands on the ground in front of you, then jump your straight legs back into a high plank. Jump your feet to the outsides of your hands and bring your hands toward your chest to return to the starting position.",
+      "file": "./pix/froggers.gif",
+      "exp":20
     },
     {
-        "name": "Jump Squats",
-        "description": "Stand with your feet slightly wider than hip-distance apart. Sit your butt back and bend your knees to drop into a squat, keeping your chest upright. Jump up into the air as high as you can and straighten out your legs. Land back on the floor with soft knees.",
-        "file": "./pix/jumpsquats.gif"
+      "name": "Jump Squats",
+      "description": "Stand with your feet slightly wider than hip-distance apart. Sit your butt back and bend your knees to drop into a squat, keeping your chest upright. Jump up into the air as high as you can and straighten out your legs. Land back on the floor with soft knees.",
+      "file": "./pix/jumpsquats.gif",
+      "exp":30
     },
     {
-        "name": "Forward Lunges",
-        "description": "Stand with your feet together. Take a big step forward with your right foot. Bend your right leg until your front thigh is parallel to the floor and your back knee is just barely touching the floor. Push up through your back front heel to return to the start position. Repeat on the other side.",
-        "file": "./pix/forwardlunges.gif"
+      "name": "Forward Lunges",
+      "description": "Stand with your feet together. Take a big step forward with your right foot. Bend your right leg until your front thigh is parallel to the floor and your back knee is just barely touching the floor. Push up through your back front heel to return to the start position. Repeat on the other side.",
+      "file": "./pix/forwardlunges.gif",
+      "exp":30
     },
     {
-        "name": "Plank Ups",
-        "description": "Start in a high plank. Bend one arm to bring the elbow and forearm to the floor. Bring the other arm down so you are in a forearm plank. Push back up to the start position, placing each hand where your elbows were. Repeat this pattern, alternating which side you lower first with each rep.",
-        "file": "./pix/plankups.gif"
+      "name": "Plank Ups",
+      "description": "Start in a high plank. Bend one arm to bring the elbow and forearm to the floor. Bring the other arm down so you are in a forearm plank. Push back up to the start position, placing each hand where your elbows were. Repeat this pattern, alternating which side you lower first with each rep.",
+      "file": "./pix/plankups.gif",
+      "exp":30
     },
     {
-        "name": "Burpees",
-        "description": "Stand with your feet shoulder-width apart, arms by your sides. Bend your knees and reach forward to place your hands on the floor. Kick your legs straight out behind you and immediately lower your entire body down to the ground, bending at the elbows. Use your arms to quickly push your body back up and hop your legs back under your body. Jump straight up into the air, reaching your arms overhead. End with your knees slightly bent.",
-        "file": "./pix/burpees.gif"
+      "name": "Burpees",
+      "description": "Stand with your feet shoulder-width apart, arms by your sides. Bend your knees and reach forward to place your hands on the floor. Kick your legs straight out behind you and immediately lower your entire body down to the ground, bending at the elbows. Use your arms to quickly push your body back up and hop your legs back under your body. Jump straight up into the air, reaching your arms overhead. End with your knees slightly bent.",
+      "file": "./pix/burpees.gif",
+      "exp":40
     },
     {
-        "name": "Bicycle Crunches",
-        "description": "Sit on floor with your knees bent, feet lifted, and your hands behind head. Keep your chest up and back straight as you lean back to engage your abs. Twist to bring your right elbow to your left knee, straightening your right leg. Alternate sides with control.",
-        "file": "./pix/bicyclecrunches.gif"
+      "name": "Bicycle Crunches",
+      "description": "Sit on floor with your knees bent, feet lifted, and your hands behind head. Keep your chest up and back straight as you lean back to engage your abs. Twist to bring your right elbow to your left knee, straightening your right leg. Alternate sides with control.",
+      "file": "./pix/bicyclecrunches.gif",
+      "exp":30
     }
   ]
 }
