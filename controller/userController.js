@@ -52,7 +52,8 @@ class UserController {
                         lvl: collection.NCE2018G1.lvl,
                         id: collection.NCE2018G1.id,
                         exp: collection.NCE2018G1.exp,
-                        name: collection.NCE2018G1.name },
+                        name: collection.NCE2018G1.name,
+                        mail:collection.NCE2018G1.mail},
                     telegram_id: collection.NCE2018G1.id,
                     name:collection.NCE2018G1.name},
             json: true };
