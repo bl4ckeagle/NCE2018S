@@ -16,7 +16,7 @@ class BotCommands {
         this.baseUrl = baseUrl;
         this.scheduler;
         this.exercise = exercise;
-        this.calender = null;
+        this.calenderID = null;
         //get all collections from the api
         this.defaultBot();//to avoid ungandled promise in defaultBot
         Promise.all([
@@ -87,7 +87,7 @@ class BotCommands {
           (msg)=> {
             console.log("hu")
             Promise.all([
-              new calendarController(this.baseUrl,43).getEvents(43,"thisgreateman@gmail.com"),
+              new calendarController(this.baseUrl,43).getEvents(43,this.calendar),
             ]).then(([getEvents]) => {
               //here must redirect to browser
               console.log(getEvents)
@@ -126,7 +126,7 @@ class BotCommands {
 
               Promise.all([
                 new calendarController(this.baseUrl,43)
-                .setEvent(43,"chr.knoll94@gmail.com"//"thisgreateman@gmail.com"
+                .setEvent(43,this.calendar//"thisgreateman@gmail.com"
                           ,"Exercise","Some description"
                           ,startTime
                           ,endTime),
@@ -249,6 +249,12 @@ class BotCommands {
                       console.log(e + " in bot command authentificate");
               })
             }else if(msg.data == "planTimeslot"){
+              Promise.all([
+                  new calendarController(this.baseUrl,43).getCalendarName(),
+              ]).then(([getCalendarName]) => {
+                  this.calendar=getCalendarName[0].summary
+                  this.bot.sendMessage(msg.from.id,"Your calendar is " +  this.calendar)
+              })
                 this.bot.sendMessage(msg.from.id,"Thank you! Let's plan your workout for tomorrow!\n"+
                     "Please choose a time when you will be able to do some exercises (max. 30 min) tomorrow"+
                     "by typing e.g. \"/time 16:20\".");
@@ -265,14 +271,24 @@ class BotCommands {
             } else if(msg.data == "Yes") {
                 let replyMarkup = this.bot.inlineKeyboard([
                     [
+                        this.bot.inlineButton('Okay!', {callback: 'planTimeslot'})
                     ]
                 ]);
-                //this.bot.editMessageReplyMarkup({inlineMsgId: msg.inline_message_id}, replyMarkup);
-                //this.bot.deleteMessage(msg.from.id, msg.inline_message_id);
-                this.bot.sendMessage(msg.from.id, "You are a GOOD boy/girl! " + msg.from.inline_message_id);
-                //this.bot.deleteMessage(msg.from.id, msg.message_id);
+
+                //this.bot.sendVideo(msg.from.id, "./media/easter/Congrats.gif");
+
+                this.bot.sendMessage(msg.from.id, "I am very proud of you! Lets plan another training session for tomorrow :)", {replyMarkup});
             } else if(msg.data == "No") {
-                this.bot.sendMessage(msg.from.id, 'You are a BAD boy/girl!');
+                let replyMarkup = this.bot.inlineKeyboard([
+                    [
+                        this.bot.inlineButton('Okay :-)', {callback: 'planTimeslot'})
+                    ]
+                ]);
+
+                //this.bot.sendVideo(msg.from.id, "./media/easter/sadCat.gif");
+
+                this.bot.sendMessage(msg.from.id, "You can do this, I believe in you! Lets plan another training session for tomorrow, " +
+                    "I promise you, you will feel better afterwards!", {replyMarkup});
             }
 
         })

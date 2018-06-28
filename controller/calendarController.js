@@ -35,7 +35,7 @@ class CalendarController {
     let p1 = new Promise(resolve => {
         let options =
             {
-                url: this.baseUrl + "/calendar/user/"+str(userID)+"/"+calendarName+"/events"
+                url: this.baseUrl + "/calendar/user/"+userID+"/"+calendarName+"/events"
             };
         request.get(options, (error, response, body) => {
                 if (error)
@@ -55,6 +55,35 @@ class CalendarController {
         }
     ).catch((e)=> {
       console.log(e + "in get Events");
+    })
+  }
+
+  getCalendarName(){
+    let p1 = new Promise(resolve => {
+        let options =
+            {
+                url: this.baseUrl + "/calendar/user/"+this.userId
+            };
+        request.get(options, (error, response, body) => {
+                if (error)
+                    console.log("authentificate Throws an error, check");
+
+                if (!error && response.statusCode === 200) {
+                    //return pretty json
+                    //show first exercise.js of this category
+                    resolve({body: body});
+                }
+            }
+        )
+
+    });
+    return p1.then((res) => {
+            console.log("Calendar name");
+            console.log(res.body[0]);
+            return JSON.parse(res.body)
+        }
+    ).catch((e)=> {
+      console.log(e + "in get caleendar name");
     })
   }
 
