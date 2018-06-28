@@ -299,14 +299,24 @@ class BotCommands {
             } else if(msg.data == "Yes") {
                 let replyMarkup = this.bot.inlineKeyboard([
                     [
+                        this.bot.inlineButton('Okay!', {callback: 'planTimeslot'})
                     ]
                 ]);
-                //this.bot.editMessageReplyMarkup({inlineMsgId: msg.inline_message_id}, replyMarkup);
-                //this.bot.deleteMessage(msg.from.id, msg.inline_message_id);
-                this.bot.sendMessage(msg.from.id, "You are a GOOD boy/girl! " + msg.from.inline_message_id);
-                //this.bot.deleteMessage(msg.from.id, msg.message_id);
+
+                //this.bot.sendVideo(msg.from.id, "./media/easter/Congrats.gif");
+
+                this.bot.sendMessage(msg.from.id, "I am very proud of you! Lets plan another training session for tomorrow :)", {replyMarkup});
             } else if(msg.data == "No") {
-                this.bot.sendMessage(msg.from.id, 'You are a BAD boy/girl!');
+                let replyMarkup = this.bot.inlineKeyboard([
+                    [
+                        this.bot.inlineButton('Okay :-)', {callback: 'planTimeslot'})
+                    ]
+                ]);
+
+                //this.bot.sendVideo(msg.from.id, "./media/easter/sadCat.gif");
+
+                this.bot.sendMessage(msg.from.id, "You can do this, I believe in you! Lets plan another training session for tomorrow, " +
+                    "I promise you, you will feel better afterwards!", {replyMarkup});
             }
 
         })

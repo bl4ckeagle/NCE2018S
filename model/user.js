@@ -19,6 +19,7 @@ class User {
                 this.name = this.myUser.NCE2018G1.name;
                 this.exp = this.myUser.NCE2018G1.exp;
                 this.lvl = this.myUser.NCE2018G1.lvl;
+                this._mail = this.myUser.NCE2018G1.mail;
             }
             else {
 
@@ -32,10 +33,10 @@ class User {
             this._name = name;
             this._exp = 0;
             this._lvl = 0;
-
+            this._mail="";
             this.myUser = {
                 'name': this.name, 'telegram_id': this.id, 'NCE2018G1': {
-                    id: this.id, name: this.name, exp: this.exp, lvl: this.lvl
+                    id: this.id, name: this.name, exp: this.exp, lvl: this.lvl,mail:this._mail
                 }
 
             }
@@ -43,6 +44,14 @@ class User {
         }
     }
 
+
+    get mail() {
+        return this._mail;
+    }
+
+    set mail(value) {
+        this._mail = value;
+    }
 
     get id() {
         return this._id;
@@ -126,6 +135,7 @@ class User {
             console.log("save");
             userController.postUser(this.myUser);
         } else {
+            this.userCollection.update(this.myUser);
             console.log();
             console.log("update");
         }
