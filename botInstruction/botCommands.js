@@ -307,6 +307,12 @@ class BotCommands {
 
                 //this.bot.sendVideo(msg.from.id, "./media/easter/Congrats.gif");
 
+                // This is the level up part, commented out because the exercises need experience points
+                /*let userId = msg.from.id;
+                let userName = msg.from.first_name;
+                let user = new userModel(userId,userName,this.userCollection);
+                user.levelUp(exp);*/
+
                 this.bot.sendMessage(msg.from.id, "I am very proud of you! Lets plan another training session for tomorrow :)", {replyMarkup});
             } else if(msg.data == "No") {
                 let replyMarkup = this.bot.inlineKeyboard([
