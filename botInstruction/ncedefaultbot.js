@@ -1,5 +1,4 @@
 const request = require("request");
-const reminder = require("../botInstruction/scheduler");
 
 class NCEDefaultBot {
     constructor(bot, accessToken, baseUrl) {
@@ -8,7 +7,6 @@ class NCEDefaultBot {
         this.accessToken = accessToken;
         this.baseUrl = baseUrl;
         this.userCollection= null;
-        this.scheduler;
         this.defaultBot();
     }
 
@@ -16,8 +14,6 @@ class NCEDefaultBot {
     defaultBot() {
         this.bot.on(['/start', '/hello'], (msg) => {
             msg.reply.text("Welcome to the Healthyliving Bot! :)");
-
-            this.scheduler = new reminder(this.bot, msg.from.id);
         });
 
         this.bot.on('/hello', (msg) => {

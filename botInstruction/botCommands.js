@@ -4,6 +4,7 @@ const trainingsModel = require("../model/exercise");
 const userController = require("../controller/userController");
 const trainingsController = require("../controller/exerciseController");
 const calendarController = require("../controller/calendarController");
+const reminder = require("../botInstruction/scheduler");
 
 const request = require("request");
 
@@ -13,6 +14,7 @@ class BotCommands {
         this.userCollection = null;
         this.nceToken = nceToken;
         this.baseUrl = baseUrl;
+        this.scheduler;
         this.exercise = exercise;
         this.calender = null;
         //get all collections from the api
@@ -31,6 +33,9 @@ class BotCommands {
     defaultBot() {
         this.bot.on("/startTraining",
             (msg) => {
+                // commented out for testing
+                //this.scheduler = new reminder(this.bot, msg.from.id);
+
                 let userId = msg.from.id;
                 let userName = msg.from.first_name;
                 let user = new userModel(userId,userName,this.userCollection);
@@ -51,7 +56,7 @@ class BotCommands {
 
                     return this.bot.sendMessage(
                       msg.from.id,
-                      "Can I use your google calendar to know when to remind you about trainigs?",
+                      "I need to use your Google calendar so that I can add the training slots to your calendar. Is this okay?",
                       {replyMarkup});
 
             })
@@ -121,7 +126,7 @@ class BotCommands {
 
               Promise.all([
                 new calendarController(this.baseUrl,43)
-                .setEvent(43,"thisgreateman@gmail.com"
+                .setEvent(43,"chr.knoll94@gmail.com"//"thisgreateman@gmail.com"
                           ,"Exercise","Some sescription"
                           ,startTime
                           ,endTime),
@@ -231,10 +236,10 @@ class BotCommands {
                   new calendarController(this.baseUrl,43).authentificate(),
               ]).then(([authentificate]) => {
                       //here must redirect to browser
-                      this.bot.sendMessage(msg.from.id,"Go to this link to connect your google calendar.").then(()=>{
+                      this.bot.sendMessage(msg.from.id,"Go to this link to connect your Google calendar:").then(()=>{
                       this.bot.sendMessage(msg.from.id,authentificate)}).then(()=>{
-                      this.bot.sendMessage(msg.from.id,"Now let's plan your workout for tommorrow!\n"+
-                                                        "Write please a time when you will be able to do some exercises tomorrow\n"+
+                      this.bot.sendMessage(msg.from.id,"Now let's plan your workout for tomorrow!\n"+
+                                                        "Please choose a time when you will be able to do some exercises (max. 30 min) tomorrow\n"+
                                                         "For example /time 16:20")})
 
                       }
@@ -242,11 +247,13 @@ class BotCommands {
                       console.log(e + " in bot command authentificate");
                   }
               )
+            }else if(msg.data == "dontUseCalendar"){
+              this.bot.sendMessage(msg.from.id, "Unfortunately you can not use me if you do not give me permission.");
 
             }else if(msg.data == "exerciseDone"){
-              this.bot.sendMessage(
-                msg.from.id,
-                "Nice! You got +1 expirience points.");
+                this.bot.sendMessage(
+                    msg.from.id,
+                    "Nice! You got +1 expirience points.");
 
 
 
