@@ -93,6 +93,11 @@ class BotCommands {
                 console.log(gif.from.id);
             });
 
+        this.bot.on('/sched',
+            (msg) => {
+                this.bot.sendMessage(msg.from.id, msg.from.id);
+            });
+
         this.bot.on('/more', (msg) => {
 
             let replyMarkup = this.bot.inlineKeyboard([
@@ -204,6 +209,17 @@ class BotCommands {
                 msg.from.id,
                 "Can I use your google calendar to know when to remind you about trainigs?",
                 {replyMarkup});
+            } else if(msg.data == "Yes") {
+                let replyMarkup = this.bot.inlineKeyboard([
+                    [
+                    ]
+                ]);
+                //this.bot.editMessageReplyMarkup({inlineMsgId: msg.inline_message_id}, replyMarkup);
+                //this.bot.deleteMessage(msg.from.id, msg.inline_message_id);
+                this.bot.sendMessage(msg.from.id, "You are a GOOD boy/girl! " + msg.from.inline_message_id);
+                //this.bot.deleteMessage(msg.from.id, msg.message_id);
+            } else if(msg.data == "No") {
+                this.bot.sendMessage(msg.from.id, 'You are a BAD boy/girl!');
             }
 
         })
