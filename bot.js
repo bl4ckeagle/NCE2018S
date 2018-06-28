@@ -17,17 +17,11 @@ Promise.all([
 )
     .then(([nceToken, exerciseCollection]) => {
         let exercise = new EXERCISE(exerciseCollection);
-        console.log(exercise.randomizer());
 
         return [nceToken, exercise];
 
     })
     .then(([nceToken, exercise]) => {
-
-            console.log("here");
-
-
-
 
             console.log("my token " + nceToken);
             new NCE_DEFAULT_BOT_COMMANDS(bot, nceToken, BASE_URL);
