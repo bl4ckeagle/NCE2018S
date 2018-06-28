@@ -14,6 +14,7 @@ class User {
 
             if (this.myUser.NCE2018G1.id === id) {
                 console.log(this.myUser.NCE2018G1.id);
+                this._serverId = this.myUser.id;
                 this.id = this.myUser.NCE2018G1.id;
                 this.name = this.myUser.NCE2018G1.name;
                 this.exp = this.myUser.NCE2018G1.exp;
@@ -88,6 +89,14 @@ class User {
 
         }
 
+    }
+
+    get serverId() {
+        return this._serverId;
+    }
+
+    set serverId(value) {
+        this._serverId = value;
     }
 
     get lvl() {
