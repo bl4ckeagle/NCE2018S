@@ -46,11 +46,11 @@ class BotCommands {
                 //console.log(user);
                 this.bot.sendMessage(
                   msg.from.id,
-                  "Hi, " + userName + "! \n Welcome to Healthy Living bot. ").then(()=>{
+                  "Hi, " + userName + "! \nNice to meet you, I'm our personal TrainingBot!").then(()=>{
                     let replyMarkup = this.bot.inlineKeyboard([
                         [
-                            this.bot.inlineButton('yes', {callback: 'useCalendar'}),
-                            this.bot.inlineButton('no', {callback: 'dontUseCalendar'})
+                            this.bot.inlineButton('Yes', {callback: 'useCalendar'}),
+                            this.bot.inlineButton('No', {callback: 'dontUseCalendar'})
                         ]
                     ], {resize: true});
 
@@ -127,11 +127,11 @@ class BotCommands {
               Promise.all([
                 new calendarController(this.baseUrl,43)
                 .setEvent(43,"chr.knoll94@gmail.com"//"thisgreateman@gmail.com"
-                          ,"Exercise","Some sescription"
+                          ,"Exercise","Some description"
                           ,startTime
                           ,endTime),
               ]).then(([setEvent]) => {
-                this.bot.sendMessage(msg.from.id,"Nice! I added an event to your caleendar and i will remind you tommorrow.");
+                this.bot.sendMessage(msg.from.id,"Nice! I just added an event to your calendar, so you won't forget it.");
               }).catch((e) => {
                 console.log(e + " in bot set event");
               })
@@ -235,18 +235,23 @@ class BotCommands {
               Promise.all([
                   new calendarController(this.baseUrl,43).authentificate(),
               ]).then(([authentificate]) => {
-                      //here must redirect to browser
-                      this.bot.sendMessage(msg.from.id,"Go to this link to connect your Google calendar:").then(()=>{
-                      this.bot.sendMessage(msg.from.id,authentificate)}).then(()=>{
-                      this.bot.sendMessage(msg.from.id,"Now let's plan your workout for tomorrow!\n"+
-                                                        "Please choose a time when you will be able to do some exercises (max. 30 min) tomorrow\n"+
-                                                        "For example /time 16:20")})
+                  let replyMarkup = this.bot.inlineKeyboard([
+                      [
+                          this.bot.inlineButton('Done', {callback: 'planTimeslot'})
+                      ]
+                  ]);
 
-                      }
-              ).catch((e) => {
+                  //here must redirect to browser
+                  this.bot.sendMessage(msg.from.id, "Go to this link to connect your Google calendar:").then(() => {
+                      this.bot.sendMessage(msg.from.id, authentificate, {replyMarkup})
+                  })
+              }).catch((e) => {
                       console.log(e + " in bot command authentificate");
-                  }
-              )
+              })
+            }else if(msg.data == "planTimeslot"){
+                this.bot.sendMessage(msg.from.id,"Thank you! Let's plan your workout for tomorrow!\n"+
+                    "Please choose a time when you will be able to do some exercises (max. 30 min) tomorrow"+
+                    "by typing e.g. \"/time 16:20\".");
             }else if(msg.data == "dontUseCalendar"){
               this.bot.sendMessage(msg.from.id, "Unfortunately you can not use me if you do not give me permission.");
 
