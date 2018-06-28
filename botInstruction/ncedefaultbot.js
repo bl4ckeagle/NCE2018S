@@ -12,7 +12,9 @@ class NCEDefaultBot {
 
 
     defaultBot() {
-        this.bot.on(['/start', '/hello'], (msg) => msg.reply.text('Welcome to the Healthyliving Bot! :)'));
+        this.bot.on(['/start', '/hello'], (msg) => {
+            msg.reply.text("Welcome to the Healthyliving Bot! :)");
+        });
 
         this.bot.on('/hello', (msg) => {
             this.bot.sendMessage(msg.from.id, `Hello, ${ msg.from.first_name }!`);

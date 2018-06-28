@@ -20,7 +20,8 @@
   "dependencies": {
     "lokijs": "^1.5.5",
     "request": "^2.87.0",
-    "telebot": "git+https://github.com/mullwar/telebot.git"
+    "telebot": "git+https://github.com/mullwar/telebot.git",
+    "node-schedule": "^1.3.0"
   },
   "bugs": {
     "url": "https://bitbucket.org/cosyhealthylivingbot/telegramexamplebot/issues"
