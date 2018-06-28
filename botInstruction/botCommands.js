@@ -84,26 +84,26 @@ class BotCommands {
         //   });
 
 
-        this.bot.on("/useCalendar",
-          (msg)=> {
-            console.log("hu")
-            Promise.all([
-              new calendarController(this.baseUrl,43).getEvents(43,this.calendar),
-            ]).then(([getEvents]) => {
-              //here must redirect to browser
-              console.log(getEvents)
-              this.bot.sendMessage(msg.from.id,"Your events:").then(()=>{
-                for(let event of getEvents){
-                  this.bot.sendMessage(msg.from.id,event.summary).then(()=>{
-                    this.bot.sendMessage("Start:" + msg.from.id,event.start.dateTime)}).then(()=>{
-                      this.bot.sendMessage("Start:" + msg.from.id,event.end.dateTime)})
-                }
-              })
-            }).catch((e) => {
-              console.log(e + " in bot command authentificate");
-            })
-          }
-        );
+        // this.bot.on("/useCalendar",
+        //   (msg)=> {
+        //     console.log("hu")
+        //     Promise.all([
+        //       new calendarController(this.baseUrl,43).getEvents(43,this.calendar),
+        //     ]).then(([getEvents]) => {
+        //       //here must redirect to browser
+        //       console.log(getEvents)
+        //       this.bot.sendMessage(msg.from.id,"Your events:").then(()=>{
+        //         for(let event of getEvents){
+        //           this.bot.sendMessage(msg.from.id,event.summary).then(()=>{
+        //             this.bot.sendMessage("Start:" + msg.from.id,event.start.dateTime)}).then(()=>{
+        //               this.bot.sendMessage("Start:" + msg.from.id,event.end.dateTime)})
+        //         }
+        //       })
+        //     }).catch((e) => {
+        //       console.log(e + " in bot command authentificate");
+        //     })
+        //   }
+        // );
 
 
         // type /setEvent 14:15
@@ -150,14 +150,23 @@ class BotCommands {
                                                 ", so you won't forget it.\n" +
                                                 "Your exercises:").then(()=>{
 
-                for(let exercise of exercises){
-                  this.bot.sendMessage(msg.from.id,exercise.name).then(()=>{
-                  this.bot.sendMessage(msg.from.id,exercise.description)}).then(()=>{
-                    msg.reply.photo(exercise.file)
-                  })
-                  //this.bot.sendVideo(gif.from.id, exercise.file);
+
+                function displayExersice(exercises,i,bot){
+                  bot.sendMessage(msg.from.id,exercises[i].name).then(()=>{
+                  bot.sendMessage(msg.from.id,exercises[i].description).then(()=>{
+                    msg.reply.photo(exercises[i].file).then(()=>{
+                    i+=1
+                    if(i<exercises.length){
+                      displayExersice(exercises,i,bot)
+                    }
+                  })})})
                 }
-                });
+
+                let i = 0
+                displayExersice(exercises,i,this.bot)
+
+
+              });
 
               }).catch((e) => {
                 console.log(e + " in bot set event");
