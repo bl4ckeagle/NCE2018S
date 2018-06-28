@@ -42,15 +42,17 @@ class BotCommands {
                 this.bot.sendMessage(
                   msg.from.id,
                   "Hi, " + userName + "! \n Welcome to Healthy Living bot. ").then(()=>{
-                let replyMarkup = this.bot.inlineKeyboard([
-                    [
-                        this.bot.inlineButton('yep', {callback: 'chooseCat'})
-                    ]
-                ], {resize: true});
-                user.levelUp(100);
+                    let replyMarkup = this.bot.inlineKeyboard([
+                        [
+                            this.bot.inlineButton('yes', {callback: 'useCalendar'}),
+                            this.bot.inlineButton('no', {callback: 'dontUseCalendar'})
+                        ]
+                    ], {resize: true});
 
-
-                return this.bot.sendMessage(msg.from.id, 'Get an exercise.js!', {replyMarkup});
+                    return this.bot.sendMessage(
+                      msg.from.id,
+                      "Can I use your google calendar to know when to remind you about trainigs?",
+                      {replyMarkup});
 
             })
           });
@@ -75,6 +77,7 @@ class BotCommands {
             })
           });
 
+
         this.bot.on("/useCalendar",
           (msg)=> {
             console.log("hu")
@@ -98,7 +101,7 @@ class BotCommands {
 
 
         // type /setEvent 14:15
-        this.bot.on(/^\/setEvent (.+)$/, (msg, props) => {
+        this.bot.on(/^\/time (.+)$/, (msg, props) => {
 
               let time = props.match[1];
               //console.log(time);
@@ -122,11 +125,12 @@ class BotCommands {
                           ,"Exercise","Some sescription"
                           ,startTime
                           ,endTime),
-              ]).then(([getEvents]) => {
-                this.bot.sendMessage(getEvents)
+              ]).then(([setEvent]) => {
+                this.bot.sendMessage(msg.from.id,"Nice! I added an event to your caleendar and i will remind you tommorrow.");
               }).catch((e) => {
                 console.log(e + " in bot set event");
               })
+
           }
         );
 
@@ -222,34 +226,17 @@ class BotCommands {
                 )//if this is choose category button
             //} else if(this.exercisesCollection.findOne({'name':msg.data})) {
 
-            }else if(this.exercisesCollection.findOne({'name':msg.data})){
-              let exercise = this.exercisesCollection.findOne({'name':msg.data}).exercise[0]
-              // this.bot.sendMessage("msg.from.id,exercise.js.name")
-              // console.log(this.exercisesCollection)
-              // let trainings = new trainingsModel(this.exercisesCollection)
-              // let exercise.js = trainings.getExercise(msg.data,1)
-              this.bot.sendMessage(msg.from.id,exercise.name).then(()=>{
-              this.bot.sendMessage(msg.from.id,exercise.description)}).then(()=>{
-              let replyMarkup = this.bot.inlineKeyboard([
-                  [
-                      this.bot.inlineButton('done', {callback: 'exerciseDone'}),
-                  ]
-              ], {resize: true});
-
-              return this.bot.sendMessage(
-                msg.from.id,
-                'Press it when you\'ll finish :)',
-                {replyMarkup});
-            })
-          }
-
-            else if(msg.data== "useCalendar"){
+            }else if(msg.data== "useCalendar"){
               Promise.all([
                   new calendarController(this.baseUrl,43).authentificate(),
               ]).then(([authentificate]) => {
                       //here must redirect to browser
-                      this.bot.sendMessage(msg.from.id,"Go to this link to connect your google calendar.")
-                      this.bot.sendMessage(msg.from.id,authentificate)
+                      this.bot.sendMessage(msg.from.id,"Go to this link to connect your google calendar.").then(()=>{
+                      this.bot.sendMessage(msg.from.id,authentificate)}).then(()=>{
+                      this.bot.sendMessage(msg.from.id,"Now let's plan your workout for tommorrow!\n"+
+                                                        "Write please a time when you will be able to do some exercises tomorrow\n"+
+                                                        "For example /time 16:20")})
+
                       }
               ).catch((e) => {
                       console.log(e + " in bot command authentificate");
@@ -262,17 +249,7 @@ class BotCommands {
                 "Nice! You got +1 expirience points.");
 
 
-              let replyMarkup = this.bot.inlineKeyboard([
-                  [
-                      this.bot.inlineButton('yes', {callback: 'useCalendar'}),
-                      this.bot.inlineButton('no', {callback: 'dontUseCalendar'})
-                  ]
-              ], {resize: true});
 
-              return this.bot.sendMessage(
-                msg.from.id,
-                "Can I use your google calendar to know when to remind you about trainigs?",
-                {replyMarkup});
             } else if(msg.data == "Yes") {
                 let replyMarkup = this.bot.inlineKeyboard([
                     [
