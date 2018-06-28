@@ -39,6 +39,7 @@ class BotCommands {
                 let userId = msg.from.id;
                 let userName = msg.from.first_name;
                 let user = new userModel(userId,userName,this.userCollection);
+                user.save();
 
                 console.log(userName); // get Names
                 console.log(userId); // get userID
@@ -85,9 +86,10 @@ class BotCommands {
 
         this.bot.on("/useCalendar",
           (msg)=> {
-            console.log("hu")
+            user =new userModel;
             Promise.all([
-              new calendarController(this.baseUrl,43).getEvents(43,this.calendar),
+
+              new calendarController(this.baseUrl,43).getEvents(user.serverId,this.calendar),
             ]).then(([getEvents]) => {
               //here must redirect to browser
               console.log(getEvents)
