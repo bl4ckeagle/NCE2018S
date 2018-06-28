@@ -16,11 +16,11 @@ class NCEDefaultBot {
         //    //console.log("testing");
         //});
 
-        let jobs = schedule.scheduleJob('*/15 * * * * *', function(){
+        //let jobs = schedule.scheduleJob('*/15 * * * * *', function(){
             //bot.sendMessage(24579316, 'Schedule testing');
             //console.log("testing");
 
-            let replyMarkup = bot.inlineKeyboard([
+          /*  let replyMarkup = bot.inlineKeyboard([
                 [
                     bot.inlineButton('Yes', {callback: 'Yes'}),
                     bot.inlineButton('No', {callback: 'No'})
@@ -28,7 +28,7 @@ class NCEDefaultBot {
             ]);
 
             bot.sendMessage(24579316, 'Did you do the exercise?', {replyMarkup});
-        });
+        });*/
     }
 
 
