@@ -33,7 +33,7 @@ class User {
             this._name = name;
             this._exp = 0;
             this._lvl = 0;
-            this._mail="";
+            this._mail="placeholder";
             this.myUser = {
                 'name': this.name, 'telegram_id': this.id, 'NCE2018G1': {
                     id: this.id, name: this.name, exp: this.exp, lvl: this.lvl,mail:this._mail

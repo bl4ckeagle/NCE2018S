@@ -34,12 +34,13 @@ class BotCommands {
     defaultBot() {
         this.bot.on("/startTraining",
             (msg) => {
-                // commented out for testing
+                // commented out for testing - please comment in if you want to use the reminder
                 //this.scheduler = new reminder(this.bot, msg.from.id);
 
                 let userId = msg.from.id;
                 let userName = msg.from.first_name;
                 let user = new userModel(userId,userName,this.userCollection);
+                user.save();
 
                 console.log(userName); // get Names
                 console.log(userId); // get userID
@@ -84,6 +85,7 @@ class BotCommands {
         //   });
 
 
+<<<<<<< HEAD
         // this.bot.on("/useCalendar",
         //   (msg)=> {
         //     console.log("hu")
@@ -104,6 +106,29 @@ class BotCommands {
         //     })
         //   }
         // );
+=======
+        this.bot.on("/useCalendar",
+          (msg)=> {
+            user =new userModel;
+            Promise.all([
+
+              new calendarController(this.baseUrl,43).getEvents(user.serverId,this.calendar),
+            ]).then(([getEvents]) => {
+              //here must redirect to browser
+              console.log(getEvents)
+              this.bot.sendMessage(msg.from.id,"Your events:").then(()=>{
+                for(let event of getEvents){
+                  this.bot.sendMessage(msg.from.id,event.summary).then(()=>{
+                    this.bot.sendMessage("Start:" + msg.from.id,event.start.dateTime)}).then(()=>{
+                      this.bot.sendMessage("Start:" + msg.from.id,event.end.dateTime)})
+                }
+              })
+            }).catch((e) => {
+              console.log(e + " in bot command authentificate");
+            })
+          }
+        );
+>>>>>>> feb1cc728b5a7382c0247424491eeea9a9102f4c
 
 
         // type /setEvent 14:15
@@ -313,6 +338,12 @@ class BotCommands {
                 ]);
 
                 //this.bot.sendVideo(msg.from.id, "./media/easter/Congrats.gif");
+
+                // This is the level up part, commented out because the exercises need experience points
+                /*let userId = msg.from.id;
+                let userName = msg.from.first_name;
+                let user = new userModel(userId,userName,this.userCollection);
+                user.levelUp(exp);*/
 
                 this.bot.sendMessage(msg.from.id, "I am very proud of you! Lets plan another training session for tomorrow :)", {replyMarkup});
             } else if(msg.data == "No") {
