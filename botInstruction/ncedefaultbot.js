@@ -39,11 +39,13 @@ class NCEDefaultBot {
             this.bot.sendMessage(msg.from.id, `Hello, ${ msg.from.first_name }!`);
         });
 
-//get exercise categories
+
+
+//get exercise.js categories
         this.bot.on('/cat', (msg) => {
             //http get request
             request({
-                url: this.baseUrl + "/exercise/category",
+                url: this.baseUrl + "/exercise.js/category",
                 json: true //// Automatically parses the JSON string in the response
             }, (error, response, body) => {
                 if (error)
@@ -58,13 +60,13 @@ class NCEDefaultBot {
         });
 
 
-//get exercise of specified category
+//get exercise.js of specified category
         this.bot.on(/^\/ex (.+)$/, (msg, props) => {
             //http get request
             let catId = props.match[1];
 
             request({
-                url: this.baseUrl + "/exercise/category/" + catId,
+                url: this.baseUrl + "/exercise.js/category/" + catId,
                 json: true // Automatically parses the JSON string in the response
             }, (error, response, body) => {
                 if (error)
@@ -72,7 +74,7 @@ class NCEDefaultBot {
 
                 if (!error && response.statusCode === 200) {
                     //return pretty json
-                    //show first exercise of this category
+                    //show first exercise.js of this category
                     this.bot.sendMessage(msg.from.id, JSON.stringify(body.results[0], null, 2));
                 }
             });

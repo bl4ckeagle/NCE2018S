@@ -1,32 +1,29 @@
 const userModel = require("../model/User");
 const helper = require("../helper/helper");
-const trainingsModel = require("../model/training");
+const trainingsModel = require("../model/exercise");
 const userController = require("../controller/userController");
-const trainingsController = require("../controller/trainingsController");
+const trainingsController = require("../controller/exerciseController");
 const calendarController = require("../controller/calendarController");
 
 const request = require("request");
 
 class BotCommands {
-    constructor(bot, nceToken, baseUrl) {
+    constructor(bot, nceToken, baseUrl,exercise) {
         this.bot = bot;
         this.userCollection = null;
-        this.exercisesCollection = null;
         this.nceToken = nceToken;
         this.baseUrl = baseUrl;
-        this.training = null;
+        this.exercise = exercise;
         this.calender = null;
         //get all collections from the api
-        this.defaultBot(); //to avoid ungandled promise in defaultBot
+        this.defaultBot();//to avoid ungandled promise in defaultBot
         Promise.all([
             new userController(this.baseUrl, this.nceToken).getUser(),
-            new trainingsController(this.baseUrl, this.nceToken).requestAllExercises(),
         ]).then(([getUser,getTraining]) => {
-                this.exercisesCollection=helper.createCollection('training',getTraining)
-                //this.userCollection = helper.createCollection('user', getUser);
+                this.userCollection = helper.createCollection('user', getUser);
             }
         ).catch((e) => {
-                console.log(e + " LOOHin BotCommands check Manuel");
+                console.log(e + " Login BotCommands check Manuel");
             }
         )
     }
@@ -36,6 +33,7 @@ class BotCommands {
             (msg) => {
                 let userId = msg.from.id;
                 let userName = msg.from.first_name;
+                let user = new userModel(userId,userName,this.userCollection);
 
                 console.log(userName); // get Names
                 console.log(userId); // get userID
@@ -49,8 +47,10 @@ class BotCommands {
                         this.bot.inlineButton('yep', {callback: 'chooseCat'})
                     ]
                 ], {resize: true});
+                user.levelUp(100);
 
-                return this.bot.sendMessage(msg.from.id, 'Get an exercise!', {replyMarkup});
+
+                return this.bot.sendMessage(msg.from.id, 'Get an exercise.js!', {replyMarkup});
 
             })
           });
@@ -75,12 +75,76 @@ class BotCommands {
             })
           });
 
+        this.bot.on("/useCalendar",
+          (msg)=> {
+            console.log("hu")
+            Promise.all([
+              new calendarController(this.baseUrl,43).getEvents(43,"thisgreateman@gmail.com"),
+            ]).then(([getEvents]) => {
+              //here must redirect to browser
+              console.log(getEvents)
+              this.bot.sendMessage(msg.from.id,"Your events:").then(()=>{
+                for(let event of getEvents){
+                  this.bot.sendMessage(msg.from.id,event.summary).then(()=>{
+                    this.bot.sendMessage("Start:" + msg.from.id,event.start.dateTime)}).then(()=>{
+                      this.bot.sendMessage("Start:" + msg.from.id,event.end.dateTime)})
+                }
+              })
+            }).catch((e) => {
+              console.log(e + " in bot command authentificate");
+            })
+          }
+        );
 
+
+        // type /setEvent 14:15
+        this.bot.on(/^\/setEvent (.+)$/, (msg, props) => {
+
+              let time = props.match[1];
+              //console.log(time);
+              let today = new Date()
+              let tomorrow = new Date(today)
+              tomorrow.setDate(today.getDate() + 1)
+              time = time.split(":")
+              tomorrow.setUTCHours(time[0])
+              tomorrow.setUTCMinutes(time[1])
+              let startTime = JSON.stringify(tomorrow)
+              let endTime = JSON.stringify(new Date(tomorrow.getTime() + 15*60000))
+              startTime = startTime.substr(1,startTime.indexOf('.')-1) + "+02:00"
+              endTime = endTime.substr(1,endTime.indexOf('.')-1) + "+02:00"
+
+              // console.log(startTime);
+              // console.log(endTime);
+
+              Promise.all([
+                new calendarController(this.baseUrl,43)
+                .setEvent(43,"thisgreateman@gmail.com"
+                          ,"Exercise","Some sescription"
+                          ,startTime
+                          ,endTime),
+              ]).then(([getEvents]) => {
+                this.bot.sendMessage(getEvents)
+              }).catch((e) => {
+                console.log(e + " in bot set event");
+              })
+          }
+        );
+
+
+        this.bot.on("/getCategories",
+            (msg)=> {
+              let trainings = new trainingsModel(this.exercisesCollection);
+              let categories = trainings.getCategories()
+              console.log(categories)
+              for(let category of categories){
+                msg.reply.text(category)
+              }
+            });
 
         this.bot.on("/getExercise",
             (msg)=> {
               let trainings = new trainingsModel(this.exercisesCollection);
-              let exercises = trainings.getExercise('Arms',3);
+              //let exercises = trainings.getExercise('Arms',3);
               for(let exercise of exercises){
                 msg.reply.text(exercise.name);
                 msg.reply.text(exercise.description)
@@ -113,11 +177,11 @@ class BotCommands {
         this.bot.on('callbackQuery', (msg) => {
             //this.bot.sendMessage(msg.from.id, `Hello, ${ msg.from.first_name }!`);
 
-            if(msg.data === "chooseCat") {
+            if(msg.data == "chooseCat") {
                 let p1 = new Promise(resolve => {
                     let options =
                         {
-                            url: this.baseUrl + "/exercise/category",
+                            url: this.baseUrl + "/exercise.js/category",
                             json: true,
                             headers: {
                                 token: this.nceToken
@@ -129,7 +193,7 @@ class BotCommands {
 
                             if (!error && response.statusCode === 200) {
                                 //return pretty json
-                                //show first exercise of this category
+                                //show first exercise.js of this category
                                 resolve({body: body});
                             }
                         }
@@ -140,7 +204,7 @@ class BotCommands {
                     let exCategories = res.body.results;
                     let buttons = [];
 
-                    for(let i = 0; i < exCategories.length; i++) {
+                    for(var i = 0; i < exCategories.length; i++) {
                         //console.log(exCategories[i].name);
                         let buttonsSub = [];
                         buttonsSub.push(this.bot.inlineButton(exCategories[i].name, {callback: exCategories[i].name}));
@@ -152,7 +216,7 @@ class BotCommands {
                         buttons
                     , {resize: true});
 
-                    this.bot.sendMessage(msg.from.id, 'Please choose the exercise category:', {replyMarkup});
+                    this.bot.sendMessage(msg.from.id, 'Please choose the exercise.js category:', {replyMarkup});
                     //this.bot.sendMessage(msg.from.id, String(res.body));
                     }
                 )//if this is choose category button
@@ -160,10 +224,10 @@ class BotCommands {
 
             }else if(this.exercisesCollection.findOne({'name':msg.data})){
               let exercise = this.exercisesCollection.findOne({'name':msg.data}).exercise[0]
-              // this.bot.sendMessage("msg.from.id,exercise.name")
+              // this.bot.sendMessage("msg.from.id,exercise.js.name")
               // console.log(this.exercisesCollection)
               // let trainings = new trainingsModel(this.exercisesCollection)
-              // let exercise = trainings.getExercise(msg.data,1)
+              // let exercise.js = trainings.getExercise(msg.data,1)
               this.bot.sendMessage(msg.from.id,exercise.name).then(()=>{
               this.bot.sendMessage(msg.from.id,exercise.description)}).then(()=>{
               let replyMarkup = this.bot.inlineKeyboard([
