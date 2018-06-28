@@ -34,7 +34,7 @@ class BotCommands {
     defaultBot() {
         this.bot.on("/startTraining",
             (msg) => {
-                // commented out for testing
+                // commented out for testing - please comment in if you want to use the reminder
                 //this.scheduler = new reminder(this.bot, msg.from.id);
 
                 let userId = msg.from.id;
